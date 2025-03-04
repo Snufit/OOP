@@ -166,7 +166,7 @@ namespace PersonLibrary
         /// <summary>
         /// Максимальный возраст.
         /// </summary>
-        public const int MaxAge = 130;
+        public const int MaxAge = 122;
 
         /// <summary>
         /// Задание возраста.
