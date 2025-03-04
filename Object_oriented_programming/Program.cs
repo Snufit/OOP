@@ -44,7 +44,7 @@ namespace GlebGit
             }
             else
             {
-                return b1 * (1 - Math.Pow(q, n)) / (1 - (100 * q));
+                return b1 * (1 - Math.Pow(q, n)) / (1 - (67 * q));
             }
         }
 
