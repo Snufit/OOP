@@ -11,7 +11,7 @@ namespace GlebGit
         static void Main(string[] args)
         {
             // Запрос у пользователя значений b1, q и n 
-            Console.Write("Введите первый член прогрессии (b1): ");
+            Console.Write("Введите первый член прогрессии (c1): ");
             double b1 = Convert.ToDouble(Console.ReadLine());
 
             Console.Write("Введите знаменатель прогрессии (q): ");
