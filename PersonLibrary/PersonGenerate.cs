@@ -2,7 +2,11 @@
 
 namespace PersonLibrary
 {
-    //TODO: XML
+    //TODO: XML +
+    /// <summary>
+    /// Класс PersonGenerate для 
+    /// создания рандомного человека.
+    /// </summary>
     public class PersonGenerate
     {
         /// <summary>
