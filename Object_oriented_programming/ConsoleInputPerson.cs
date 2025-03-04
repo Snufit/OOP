@@ -38,8 +38,8 @@ namespace Object_oriented_programming
                         if (!int.TryParse(Console.ReadLine(), out int age))
                         {
                             throw new FormatException
-                            ($"Возраст - это число " +
-                            $"от {Person.MinAge} до {Person.MaxAge}");
+                                ($"Возраст - это число " +
+                                $"от {Person.MinAge} до {Person.MaxAge}");
                         }
                         person.Age = age;
                     },
@@ -54,22 +54,22 @@ namespace Object_oriented_programming
                             case "0":
                             case "м":
                             case "m":
-                                {
+                            {
                                 person.Gender = Gender.Male;
                                 break;
                             }
                             case "1":
                             case "ж":
                             case "f":
-                                {
+                            {
                                 person.Gender = Gender.Female;
                                 break;
                             }
                             default:
                                 throw new ArgumentException
-                                ("Некорректный ввод пола.\n" +
-                                 "Пожалуйста, введите 0, 'м' или 'M' для " +
-                                 "Мужского; 1, 'ж' или 'F' для Женского.");
+                                    ("Некорректный ввод пола.\n" +
+                                     "Пожалуйста, введите 0, 'м' или 'M' для " +
+                                     "Мужского; 1, 'ж' или 'F' для Женского.");
                         }
                     },
             };
