@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-namespace OOP1
+namespace Object_oriented_programming
 {
     /// <summary>
     /// Основной класс программы.
@@ -19,18 +19,18 @@ namespace OOP1
             PersonList personList2 = new PersonList();
 
             Person persona1 = new Person(
-                "Тарас", "Кузнецов", 38, Gender.Male);
+                "Семён", "Семёныч", 38, Gender.Male);
             Person persona2 = new Person(
-                "Зоя", "Журавлева", 16, Gender.Female);
+                "Нина", "Петровна", 16, Gender.Female);
             Person persona3 = new Person(
-                "Лаврентий", "Попов", 9, Gender.Male);
+                "Леонид", "Крылов", 9, Gender.Male);
 
             Person persona4 = new Person(
-                "Яна", "Степанова", 50, Gender.Female);
+                "Юрий", "Долгорукий", 50, Gender.Male);
             Person persona5 = new Person(
-                "Ефим", "Федоров", 90, Gender.Male);
+                "Анастасия", "Лаврова", 90, Gender.Female);
             Person persona6 = new Person(
-                "Анастасия", "Лебедева", 34, Gender.Female);
+                "Ирина", "Григорьева", 34, Gender.Female);
 
             personList1.AddPerson(persona1);
             personList1.AddPerson(persona2);
@@ -50,7 +50,7 @@ namespace OOP1
 
             // 3.c Добавление нового человека в первый список
             Person persona7 = new Person(
-                "Василий", "Черноголовков", 25, Gender.Male);
+                "Василий", "Соловьёв", 25, Gender.Male);
             personList1.AddPerson(persona7);
             Console.WriteLine($"В первый список добавлен новый человек.\n" +
                 $"Список №1:\n{personList1.GetInfo()}");

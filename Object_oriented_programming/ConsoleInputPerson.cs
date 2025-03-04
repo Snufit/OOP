@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace OOP1
+namespace Object_oriented_programming
 {
     /// <summary>
     /// Класс ConsoleInputPerson.
