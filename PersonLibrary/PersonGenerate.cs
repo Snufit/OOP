@@ -2,10 +2,7 @@
 
 namespace PersonLibrary
 {
-    /// <summary>
-    /// Клас PersonGenerate для 
-    /// создания рандомного человека.
-    /// </summary>
+    
     public class PersonGenerate
     {
         /// <summary>
