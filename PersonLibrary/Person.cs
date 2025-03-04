@@ -160,7 +160,7 @@ namespace PersonLibrary
         /// <summary>
         /// Минимальный возраст.
         /// </summary>
-        public const int MinAge = 1;
+        public const int MinAge = 0;
 
         /// <summary>
         /// Максимальный возраст.
