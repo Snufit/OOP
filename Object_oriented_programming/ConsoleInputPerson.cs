@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-//TODO: rsdn +
 namespace Lab1
 {
     /// <summary>

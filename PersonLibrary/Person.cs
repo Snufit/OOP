@@ -44,8 +44,6 @@ namespace PersonLibrary
         /// </summary>
         public string Name
         {
-            //TODO: duplication +
-            //TODO: bug +
             get
             {
                 return _name;
@@ -62,7 +60,6 @@ namespace PersonLibrary
         /// </summary>
         public string Surname
         {
-            //TODO: duplication +
             get
             {
                 return _surname;
@@ -143,7 +140,6 @@ namespace PersonLibrary
                 Regex.IsMatch(surname, _englishLanguageCheck));
         }
 
-        //TODO: group with properties +
         /// <summary>
         /// Минимальный возраст.
         /// </summary>

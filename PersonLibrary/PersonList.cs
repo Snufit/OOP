@@ -98,7 +98,6 @@ namespace PersonLibrary
             _persons.Clear();
         }
 
-        //TODO: to property +
         /// <summary>
         /// Количество персон в списке.
         /// </summary>
