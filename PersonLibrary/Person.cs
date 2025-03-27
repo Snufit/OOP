@@ -31,12 +31,48 @@ namespace PersonLibrary
         public Gender Gender { get; set; }
 
         /// <summary>
-        /// Получение информации о персоне.
+        /// Патерн русского языка.
         /// </summary>
-        /// <returns>Строка с данными полей объекта класса Person.</returns>
-        public string GetInfo()
+        private const string _russianLanguageCheck = @"(^[а-яА-Я]+-?[а-яА-Я]+$)";
+
+        /// <summary>
+        /// Патерн английского языка.
+        /// </summary>
+        private const string _englishLanguageCheck = @"(^[a-zA-Z]+-?[a-zA-Z]+$)";
+
+        /// <summary>
+        /// Минимальный возраст.
+        /// </summary>
+        public const int MinAge = 0;
+
+        /// <summary>
+        /// Максимальный возраст.
+        /// </summary>
+        public const int MaxAge = 122;
+
+        /// <summary>
+        /// Задание возраста.
+        /// </summary>
+        public int Age
         {
-            return $"{Name} {Surname}, возраст: {Age}, пол: {Gender}\n";
+            get
+            {
+                return _age;
+            }
+
+            set
+            {
+                if (value >= MinAge && value <= MaxAge)
+                {
+                    _age = value;
+                }
+                else
+                {
+                    throw new ArgumentOutOfRangeException
+                        ($"Возраст должен находиться в пределах " +
+                        $"от {MinAge} года до {MaxAge} лет");
+                }
+            }
         }
 
         /// <summary>
@@ -54,6 +90,8 @@ namespace PersonLibrary
                 _name = CheckRegister(value);
             }
         }
+
+        
 
         /// <summary>
         /// Задание фамилии.
@@ -78,6 +116,36 @@ namespace PersonLibrary
         }
 
         /// <summary>
+        /// Конструктор класса.
+        /// </summary>
+        /// <param name="name">Имя.</param>
+        /// <param name="surname">Фамилия.</param>
+        /// <param name="age">Возраст.</param>
+        /// <param name="gender">Гендер.</param>
+        public Person(string name, string surname, int age, Gender gender)
+        {
+            _name = name;
+            _surname = surname;
+            _age = age;
+            Gender = gender;
+        }
+
+        /// <summary>
+        /// Конструктор класса по умолчанию.
+        /// </summary>
+        public Person() : this("Иван", "Иванов", 0, Gender.Male)
+        { }
+
+        /// <summary>
+        /// Получение информации о персоне.
+        /// </summary>
+        /// <returns>Строка с данными полей объекта класса Person.</returns>
+        public string GetInfo()
+        {
+            return $"{Name} {Surname}, возраст: {Age}, пол: {Gender}\n";
+        }
+
+        /// <summary>
         /// Преобразование имени и фамилии в правильные регистры.
         /// </summary>
         /// <param name="name">Имя или Фамилия.</param>
@@ -88,15 +156,7 @@ namespace PersonLibrary
             return txt.ToTitleCase(name.ToLower());
         }
 
-        /// <summary>
-        /// Патерн русского языка.
-        /// </summary>
-        private const string _russianLanguageCheck = @"(^[а-яА-Я]+-?[а-яА-Я]+$)";
-
-        /// <summary>
-        /// Патерн английского языка.
-        /// </summary>
-        private const string _englishLanguageCheck = @"(^[a-zA-Z]+-?[a-zA-Z]+$)";
+        
 
         /// <summary>
         /// Валидация имени или фамилии.
@@ -139,61 +199,5 @@ namespace PersonLibrary
                 || (Regex.IsMatch(name, _englishLanguageCheck) &&
                 Regex.IsMatch(surname, _englishLanguageCheck));
         }
-
-        /// <summary>
-        /// Минимальный возраст.
-        /// </summary>
-        public const int MinAge = 0;
-
-        /// <summary>
-        /// Максимальный возраст.
-        /// </summary>
-        public const int MaxAge = 122;
-
-        /// <summary>
-        /// Задание возраста.
-        /// </summary>
-        public int Age
-        {
-            get
-            {
-                return _age;
-            }
-
-            set
-            {
-                if (value >= MinAge && value <= MaxAge)
-                {
-                    _age = value;
-                }
-                else
-                {
-                    throw new ArgumentOutOfRangeException
-                        ($"Возраст должен находиться в пределах " +
-                        $"от {MinAge} года до {MaxAge} лет");
-                }
-            }
-        }
-
-        /// <summary>
-        /// Конструктор класса.
-        /// </summary>
-        /// <param name="name">Имя.</param>
-        /// <param name="surname">Фамилия.</param>
-        /// <param name="age">Возраст.</param>
-        /// <param name="gender">Гендер.</param>
-        public Person(string name, string surname, int age, Gender gender)
-        {
-            _name = name;
-            _surname = surname;
-            _age = age;
-            Gender = gender;
-        }
-
-        /// <summary>
-        /// Конструктор класса по умолчанию.
-        /// </summary>
-        public Person() : this("Иван", "Иванов", 0, Gender.Male)
-        { }
     }
 }
