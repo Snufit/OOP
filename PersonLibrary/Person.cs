@@ -44,24 +44,16 @@ namespace PersonLibrary
         /// </summary>
         public string Name
         {
+            //TODO: duplication +
+            //TODO: bug +
             get
             {
                 return _name;
             }
             set
             {
-                //TODO: duplication
-                //TODO: bug
-                if (IsNameOrSurnameValid(value))
-                {
-                    _name = CheckRegister(value);
-                }
-                else
-                {
-                    throw new ArgumentException
-                        ("Имя должно быть написано на одном языке.\n" +
-                        "Имя может быть двойным и записано через дефис.");
-                }
+                ValidateNameOrSurname(value, "Имя");
+                _name = CheckRegister(value);
             }
         }
 
@@ -70,24 +62,21 @@ namespace PersonLibrary
         /// </summary>
         public string Surname
         {
+            //TODO: duplication +
             get
             {
                 return _surname;
             }
             set
             {
-                //TODO: duplication
-                if (IsNameOrSurnameValid(value)
-                    && IsNameAndSurnameValid(_name, value))
-                {
-                    _surname = CheckRegister(value);
-                }
-                else
+                ValidateNameOrSurname(value, "Фамилия");
+                if (!IsNameAndSurnameValid(_name, value))
                 {
                     throw new ArgumentException
                         ("Фамилия может быть двойной и записана через дефис.\n" +
                          "Фамилия и имя должны быть введены на одном языке.");
                 }
+                _surname = CheckRegister(value);
             }
         }
 
@@ -111,6 +100,21 @@ namespace PersonLibrary
         /// Патерн английского языка.
         /// </summary>
         private const string _englishLanguageCheck = @"(^[a-zA-Z]+-?[a-zA-Z]+$)";
+
+        /// <summary>
+        /// Валидация имени или фамилии.
+        /// </summary>
+        /// <param name="name">Имя или фамилия, которые необходимо проверить.</param>
+        /// <param name="type">Тип (имя или фамилия) для формирования сообщения об ошибке.</param>
+        private void ValidateNameOrSurname(string name, string type)
+        {
+            if (!IsNameOrSurnameValid(name))
+            {
+                throw new ArgumentException
+                    ($"{type} должно быть написано на одном языке.\n" +
+                     $"{type} может быть двойным и записано через дефис.");
+            }
+        }
 
         /// <summary>
         /// Проверка того, что имя или фамилия введены на одном языке.
