@@ -71,6 +71,8 @@ namespace PersonLibrary
             }
             set
             {
+                //TODO: duplication
+                //TODO: bug
                 if (IsNameOrSurnameValid(value))
                 {
                     _name = CheckRegister(value);
@@ -95,6 +97,7 @@ namespace PersonLibrary
             }
             set
             {
+                //TODO: duplication
                 if (IsNameOrSurnameValid(value)
                     && IsNameAndSurnameValid(_name, value))
                 {
@@ -157,6 +160,7 @@ namespace PersonLibrary
                 Regex.IsMatch(surname, _englishLanguageCheck));
         }
 
+        //TODO: group with properties
         /// <summary>
         /// Минимальный возраст.
         /// </summary>

@@ -11,7 +11,7 @@
         Male,
 
         /// <summary>
-        /// Femaale.
+        /// Female.
         /// </summary>
         Female
     }
