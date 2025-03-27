@@ -31,27 +31,6 @@ namespace PersonLibrary
         public Gender Gender { get; set; }
 
         /// <summary>
-        /// Конструктор класса.
-        /// </summary>
-        /// <param name="name">Имя.</param>
-        /// <param name="surname">Фамилия.</param>
-        /// <param name="age">Возраст.</param>
-        /// <param name="gender">Гендер.</param>
-        public Person(string name, string surname, int age, Gender gender)
-        {
-            _name = name;
-            _surname = surname;
-            _age = age;
-            Gender = gender;
-        }
-
-        /// <summary>
-        /// Конструктор класса по умолчанию.
-        /// </summary>
-        public Person() : this("Иван", "Иванов", 0, Gender.Male)
-        { }
-
-        /// <summary>
         /// Получение информации о персоне.
         /// </summary>
         /// <returns>Строка с данными полей объекта класса Person.</returns>
@@ -160,7 +139,7 @@ namespace PersonLibrary
                 Regex.IsMatch(surname, _englishLanguageCheck));
         }
 
-        //TODO: group with properties
+        //TODO: group with properties +
         /// <summary>
         /// Минимальный возраст.
         /// </summary>
@@ -195,5 +174,26 @@ namespace PersonLibrary
                 }
             }
         }
+
+        /// <summary>
+        /// Конструктор класса.
+        /// </summary>
+        /// <param name="name">Имя.</param>
+        /// <param name="surname">Фамилия.</param>
+        /// <param name="age">Возраст.</param>
+        /// <param name="gender">Гендер.</param>
+        public Person(string name, string surname, int age, Gender gender)
+        {
+            _name = name;
+            _surname = surname;
+            _age = age;
+            Gender = gender;
+        }
+
+        /// <summary>
+        /// Конструктор класса по умолчанию.
+        /// </summary>
+        public Person() : this("Иван", "Иванов", 0, Gender.Male)
+        { }
     }
 }

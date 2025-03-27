@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-//TODO: rsdn
-namespace Object_oriented_programming
+//TODO: rsdn +
+namespace Lab1
 {
     /// <summary>
     /// Класс ConsoleInputPerson.

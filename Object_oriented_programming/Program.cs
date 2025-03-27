@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-namespace Object_oriented_programming
+namespace Lab1
 {
     /// <summary>
     /// Основной класс программы.

@@ -98,14 +98,17 @@ namespace PersonLibrary
             _persons.Clear();
         }
 
-        //TODO: to property
+        //TODO: to property +
         /// <summary>
         /// Количество персон в списке.
         /// </summary>
         /// <returns>Количество персон в списке.</returns>
-        public int GetCountPerson()
+        public int NumberOfPersons
         {
-            return _persons.Count;
+            get
+            {
+                return _persons.Count;
+            }
         }
 
         /// <summary>
