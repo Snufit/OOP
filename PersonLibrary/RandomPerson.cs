@@ -2,12 +2,12 @@
 
 namespace PersonLibrary
 {
-    //TODO: rename
+    //TODO: rename +
     /// <summary>
-    /// Клас PersonGenerate для 
+    /// Клас GetRandomPerson для 
     /// создания рандомного человека.
     /// </summary>
-    public class PersonGenerate
+    public class GetRandomPerson
     {
         /// <summary>
         /// Метод присоения полям Person рандомных значений.
@@ -123,23 +123,23 @@ namespace PersonLibrary
 
             switch (person.Gender)
             {
-                //TODO: RSDN
+                //TODO: RSDN +
                 case Gender.Male:
-                    {
-                        person.Name = maleName
-                                [random.Next(0, maleName.Length)];
-                        person.Surname = maleSurname
-                                [random.Next(0, maleSurname.Length)];
-                        break;
-                    }
+                {
+                    person.Name = maleName
+                        [random.Next(0, maleName.Length)];
+                    person.Surname = maleSurname
+                        [random.Next(0, maleSurname.Length)];
+                    break;
+                }
                 case Gender.Female:
-                    {
-                        person.Name = femaleName
-                                [random.Next(0, femaleName.Length)];
-                        person.Surname = femaleSurname
-                                [random.Next(0, femaleSurname.Length)];
-                        break;
-                    }
+                {
+                    person.Name = femaleName
+                         [random.Next(0, femaleName.Length)];
+                    person.Surname = femaleSurname
+                         [random.Next(0, femaleSurname.Length)];
+                     break;
+                }
             }
         }
 
@@ -171,19 +171,19 @@ namespace PersonLibrary
 
             if (random.Next(2) == 0)
             {
-                //TODO: RSDN
+                //TODO: RSDN +
                 switch (adult.Gender)
                 {
                     case Gender.Male:
-                        {
-                            adult.Partner = GetRandomAdult(Gender.Female);
-                            break;
-                        }
+                    {
+                        adult.Partner = GetRandomAdult(Gender.Female);
+                        break;
+                    }
                     case Gender.Female:
-                        {
-                            adult.Partner = GetRandomAdult(Gender.Male);
-                            break;
-                        }
+                    {
+                        adult.Partner = GetRandomAdult(Gender.Male);
+                        break;
+                    }
                 }
             }
         }

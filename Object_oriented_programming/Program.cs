@@ -27,11 +27,11 @@ namespace OOP1
             {
                 if (random.NextDouble() < 0.5)
                 {
-                    personList.AddPerson(PersonGenerate.GetRandomAdult());
+                    personList.AddPerson(GetRandomPerson.GetRandomAdult());
                 }
                 else
                 {
-                    personList.AddPerson(PersonGenerate.GetRandomChild());
+                    personList.AddPerson(GetRandomPerson.GetRandomChild());
                 }
             }
 
@@ -56,7 +56,7 @@ namespace OOP1
                     case Child child:
                         {
                             Console.WriteLine($"Четвертый ребенок: {child.Surname} {child.Name}");
-                            Console.WriteLine(child.Goesviolinlessons());
+                            Console.WriteLine(child.Getviolinlessons());
                             break;
                         }
                 }
