@@ -11,13 +11,13 @@ namespace PersonLibrary
         /// <summary>
         /// Объявление списка объектов типа Person.
         /// </summary>
-        private readonly List<Person> _persons = new List<Person>();
+        private readonly List<PersonBase> _persons = new List<PersonBase>();
 
         /// <summary>
         /// Добавление персоны.
         /// </summary>
         /// <param name="person">Объект класса Person.</param>
-        public void AddPerson(Person person)
+        public void AddPerson(PersonBase person)
         {
             _persons.Add(person);
         }
@@ -26,7 +26,7 @@ namespace PersonLibrary
         /// Удаление персон.
         /// </summary>
         /// <param name="person">Объект класса Person.</param>
-        public void RemovePerson(Person person)
+        public void RemovePerson(PersonBase person)
         {
             _persons.Remove(person);
         }
@@ -59,7 +59,7 @@ namespace PersonLibrary
         /// <exception cref="IndexOutOfRangeException">Исключение, которое
         /// генерируется, если введенный индекс находится за пределами его
         /// границ.</exception>
-        public Person GetPersonAtIndex(int index)
+        public PersonBase GetPersonAtIndex(int index)
         {
             if (index >= 0 && index < _persons.Count)
             {
@@ -77,7 +77,7 @@ namespace PersonLibrary
         /// </summary>
         /// <param name="person">Объект класса Person.</param>
         /// <returns>Индекс объекта.</returns>
-        public int ReturnIndexPerson(Person person)
+        public int ReturnIndexPerson(PersonBase person)
         {
             if (_persons.Contains(person))
             {
@@ -114,7 +114,7 @@ namespace PersonLibrary
         public string GetInfo()
         {
             string infoPerson = default;
-            foreach (Person persona in _persons)
+            foreach (PersonBase persona in _persons)
             {
                 infoPerson += persona.GetInfo();
             }

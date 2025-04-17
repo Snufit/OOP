@@ -1,8 +1,7 @@
 ﻿using PersonLibrary;
 using System;
-using System.Reflection;
 
-namespace Object_oriented_programming
+namespace OOP1
 {
     /// <summary>
     /// Основной класс программы.
@@ -14,90 +13,55 @@ namespace Object_oriented_programming
         /// </summary>
         private static void Main()
         {
-            // 3.a Создание двух списков персон по три человека
-            PersonList personList1 = new PersonList();
-            PersonList personList2 = new PersonList();
+            // 5.a. Создание списка PersonList, состоящего из рандомного кол-ва
+            // взрослых и детей
+            PersonList personList = new PersonList();
 
-            Person persona1 = new Person(
-                "Семён", "Семёныч", 38, Gender.Male);
-            Person persona2 = new Person(
-                "Нина", "Петровна", 16, Gender.Female);
-            Person persona3 = new Person(
-                "Леонид", "Крылов", 9, Gender.Male);
+            Console.WriteLine("Рандомный список взрослых и детей:\n");
 
-            Person persona4 = new Person(
-                "Юрий", "Долгорукий", 50, Gender.Male);
-            Person persona5 = new Person(
-                "Анастасия", "Лаврова", 90, Gender.Female);
-            Person persona6 = new Person(
-                "Ирина", "Григорьева", 34, Gender.Female);
+            Random random = new Random();
 
-            personList1.AddPerson(persona1);
-            personList1.AddPerson(persona2);
-            personList1.AddPerson(persona3);
+            for (int i = 0; i < 7; i++)
+            {
+                if (random.NextDouble() < 0.5)
+                {
+                    personList.AddPerson(PersonGenerate.GetRandomAdult());
+                }
+                else
+                {
+                    personList.AddPerson(PersonGenerate.GetRandomChild());
+                }
+            }
 
-            personList2.AddPerson(persona4);
-            personList2.AddPerson(persona5);
-            personList2.AddPerson(persona6);
+            // 5.b. Вывод на экран описания всех людей списка.
+            Console.WriteLine(personList.GetInfo());
 
-            // 3.b Вывод содержимого каждого списка на экран
-            Console.WriteLine($"Список №1:\n" +
-                $"{personList1.GetInfo()}");
-            Console.WriteLine($"Список №2:\n" +
-                $"{personList2.GetInfo()}");
-            Console.WriteLine("Нажмите любую клавишу");
-            Console.ReadKey(true);
+            // 5.c. Определение типа четвертого человека в списке
+            // и выполнения методов, присущих этому классу.
+            if (personList.GetCountPerson() > 3)
+            {
+                var fourthPerson = personList.GetPersonAtIndex(3);
+                Console.WriteLine($"Тип четвертого человека: {fourthPerson.GetType()}");
 
-            // 3.c Добавление нового человека в первый список
-            Person persona7 = new Person(
-                "Василий", "Соловьёв", 25, Gender.Male);
-            personList1.AddPerson(persona7);
-            Console.WriteLine($"В первый список добавлен новый человек.\n" +
-                $"Список №1:\n{personList1.GetInfo()}");
-            Console.WriteLine("Нажмите любую клавишу");
-            Console.ReadKey(true);
+                switch (fourthPerson)
+                {
+                    case Adult adult:
+                        {
+                            Console.WriteLine($"Четвертый взрослый: {adult.Surname} {adult.Name}");
+                            Console.WriteLine(adult.GetExtraIncome());
+                            break;
+                        }
+                    case Child child:
+                        {
+                            Console.WriteLine($"Четвертый ребенок: {child.Surname} {child.Name}");
+                            Console.WriteLine(child.GetChewingGum());
+                            break;
+                        }
+                }
+            }
 
-            // 3.d Копирование второго человека из первого списка в конец
-            // второго
-            Console.WriteLine("Во второй список добавлен второй человек из" +
-                " первого списка:");
-            personList2.AddPerson(personList1.GetPersonAtIndex(1));
-            Console.WriteLine($"Список №1:" +
-                $"\n{personList1.GetInfo()}");
-            Console.WriteLine($"Список №2:" +
-                $"\n{personList2.GetInfo()}");
-            Console.WriteLine("Нажмите любую клавишу");
-            Console.ReadKey(true);
-
-            // 3.e Удаление второго человека из первого списка
-            personList1.RemovePersonAtIndex(1);
-            Console.WriteLine("В первом списке удален второй человек:");
-            Console.WriteLine($"Список №1:" +
-                $"\n{personList1.GetInfo()}");
-            Console.WriteLine($"Список №2:" +
-                $"\n{personList2.GetInfo()}");
-            Console.WriteLine("Нажмите любую клавишу");
-            Console.ReadKey(true);
-
-            // 3.f Очистка второго списка
-            personList2.RemovePerson();
-            Console.WriteLine("Второй список очищен");
-            Console.WriteLine($"Список №1:" +
-                $"\n{personList1.GetInfo()}");
-            Console.WriteLine($"Список №2:" +
-                $"\n{personList2.GetInfo()}");
-
-            // 4 Чтение персоны с клавиатуры и вывод персоны на экран
-            Person personConsole = ConsoleInputPerson.ReadPersonFromConsole();
-            Console.WriteLine(personConsole.GetInfo());
-
-            // 5 Генерация рандомной персоны
-            Person randomPerson = PersonGenerate.GenerateRandomPerson();
-            personList1.AddPerson(randomPerson);
-            Console.WriteLine(
-                $"Список №1 после добавление рандомной персоны:\n" +
-                $"{personList1.GetInfo()}");
-            Console.ReadKey(true);
+            Console.WriteLine("Для завершения программы нажмите на любую клавишу!");
+            Console.ReadKey();
         }
     }
 }

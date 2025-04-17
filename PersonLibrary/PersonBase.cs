@@ -8,7 +8,7 @@ namespace PersonLibrary
     /// <summary>
     /// Класс Person.
     /// </summary>
-    public class Person
+    public abstract class PersonBase
     {
         /// <summary>
         /// Имя.
@@ -37,7 +37,7 @@ namespace PersonLibrary
         /// <param name="surname">Фамилия.</param>
         /// <param name="age">Возраст.</param>
         /// <param name="gender">Гендер.</param>
-        public Person(string name, string surname, int age, Gender gender)
+        public PersonBase(string name, string surname, int age, Gender gender)
         {
             _name = name;
             _surname = surname;
@@ -48,16 +48,16 @@ namespace PersonLibrary
         /// <summary>
         /// Конструктор класса по умолчанию.
         /// </summary>
-        public Person() : this("Иван", "Иванов", 0, Gender.Male)
+        public PersonBase() : this("Иван", "Иванов", 0, Gender.Male)
         { }
 
         /// <summary>
         /// Получение информации о персоне.
         /// </summary>
         /// <returns>Строка с данными полей объекта класса Person.</returns>
-        public string GetInfo()
+        public virtual string GetInfo()
         {
-            return $"{Name} {Surname}, возраст: {Age}, пол: {Gender}\n";
+            return $"{Surname} {Name}, возраст: {Age}, пол: {Gender}";
         }
 
         /// <summary>
@@ -103,8 +103,9 @@ namespace PersonLibrary
                 else
                 {
                     throw new ArgumentException
-                        ("Фамилия может быть двойной и записана через дефис.\n" +
-                         "Фамилия и имя должны быть введены на одном языке.");
+                        ("Фамилия должна быть написана на одном языке.\n" +
+                        "Фамилия может быть двойной и записана через дефис.\n" +
+                        "Фамилия и имя должны быть введены на одном языке.");
                 }
             }
         }
@@ -160,12 +161,12 @@ namespace PersonLibrary
         /// <summary>
         /// Минимальный возраст.
         /// </summary>
-        public const int MinAge = 1;
+        public virtual int MinAge { get; } = 1;
 
         /// <summary>
         /// Максимальный возраст.
         /// </summary>
-        public const int MaxAge = 122;
+        public virtual int MaxAge { get; } = 130;
 
         /// <summary>
         /// Задание возраста.
