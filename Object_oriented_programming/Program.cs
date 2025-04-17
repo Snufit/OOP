@@ -3,8 +3,10 @@ using System;
 
 namespace OOP1
 {
+    //TODO: XML
     internal class Program
     {
+        //TODO: XML
         private static void Main()
         {
             // 5.a. Создание списка PersonList, состоящего из рандомного кол-ва
@@ -54,6 +56,7 @@ namespace OOP1
                 }
             }
 
+            //TODO: rewrite
             Console.WriteLine("Для завершения программы нажмите на любую клавишу!");
             Console.ReadKey();
         }

@@ -2,6 +2,7 @@
 
 namespace PersonLibrary
 {
+    //TODO: rename
     /// <summary>
     /// Клас PersonGenerate для 
     /// создания рандомного человека.
@@ -122,6 +123,7 @@ namespace PersonLibrary
 
             switch (person.Gender)
             {
+                //TODO: RSDN
                 case Gender.Male:
                     {
                         person.Name = maleName
@@ -169,6 +171,7 @@ namespace PersonLibrary
 
             if (random.Next(2) == 0)
             {
+                //TODO: RSDN
                 switch (adult.Gender)
                 {
                     case Gender.Male:
