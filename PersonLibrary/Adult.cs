@@ -122,9 +122,6 @@ namespace PersonLibrary
             }
         }
 
-        /// <summary>
-        /// Задание партнера.
-        /// </summary>
         public Adult Partner
         {
             get
