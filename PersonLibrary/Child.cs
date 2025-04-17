@@ -131,12 +131,12 @@ namespace PersonLibrary
                 $"папа: {infoFather}, место обучения: {PlaceOfStudy}\n";
         }
 
-        //TODO: RSDN
+        //TODO: RSDN +
         /// <summary>
         /// Метод для класса Child.
         /// </summary>
         /// <returns>Строка.</returns>
-        public string Getviolinlessons()
+        public string GetViolinLessons()
         {
             return "Ходит на уроки игры на скрипке";
         }

@@ -54,7 +54,7 @@ namespace OOP1
                     case Child child:
                         {
                             Console.WriteLine($"Четвертый ребенок: {child.Surname} {child.Name}");
-                            Console.WriteLine(child.Getviolinlessons());
+                            Console.WriteLine(child.GetViolinLessons());
                             break;
                         }
                 }
