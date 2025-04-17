@@ -135,9 +135,9 @@ namespace PersonLibrary
         /// Метод для класса Child.
         /// </summary>
         /// <returns>Строка.</returns>
-        public string GetChewingGum()
+        public string Goesviolinlessons()
         {
-            return "Жует жвачку и не слушает преподавателя";
+            return "Ходит на уроки игры на скрипке";
         }
     }
 }

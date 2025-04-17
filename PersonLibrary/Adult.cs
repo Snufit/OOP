@@ -209,7 +209,7 @@ namespace PersonLibrary
         /// <returns>Строка.</returns>
         public string GetExtraIncome()
         {
-            return "Ищет дополнительный заработок, чтобы содержать семью";
+            return "Ищет дополнительный заработок";
         }
     }
 }

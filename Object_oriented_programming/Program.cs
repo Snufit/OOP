@@ -48,7 +48,7 @@ namespace OOP1
                     case Child child:
                         {
                             Console.WriteLine($"Четвертый ребенок: {child.Surname} {child.Name}");
-                            Console.WriteLine(child.GetChewingGum());
+                            Console.WriteLine(child.Goesviolinlessons());
                             break;
                         }
                 }
