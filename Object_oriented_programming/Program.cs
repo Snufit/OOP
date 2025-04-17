@@ -3,13 +3,11 @@ using System;
 
 namespace OOP1
 {
-    //TODO: XML +
     /// <summary>
     /// Основной класс программы.
     /// </summary>
     internal class Program
     {
-        //TODO: XML +
         /// <summary>
         /// Точка входа в программу.
         /// </summary>
@@ -62,7 +60,6 @@ namespace OOP1
                 }
             }
 
-            //TODO: rewrite +
             Console.WriteLine("Для завершения программы нажмите на любую клавишу...");
             Console.ReadKey();
         }

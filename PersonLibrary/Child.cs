@@ -131,7 +131,7 @@ namespace PersonLibrary
                 $"папа: {infoFather}, место обучения: {PlaceOfStudy}\n";
         }
 
-        //TODO: RSDN +
+        //TODO: RSDN
         /// <summary>
         /// Метод для класса Child.
         /// </summary>

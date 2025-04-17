@@ -2,7 +2,6 @@
 
 namespace PersonLibrary
 {
-    //TODO: rename +
     /// <summary>
     /// Клас GetRandomPerson для 
     /// создания рандомного человека.
@@ -111,19 +110,10 @@ namespace PersonLibrary
                 (Guid.NewGuid().GetHashCode());
 
             person.Age = random.Next(person.MinAge, person.MaxAge);
-
-            if (gender == Gender.Male)
-            {
-                person.Gender = Gender.Male;
-            }
-            else if (gender == Gender.Female)
-            {
-                person.Gender = Gender.Female;
-            }
+            person.Gender = gender;
 
             switch (person.Gender)
             {
-                //TODO: RSDN +
                 case Gender.Male:
                 {
                     person.Name = maleName
@@ -171,20 +161,12 @@ namespace PersonLibrary
 
             if (random.Next(2) == 0)
             {
-                //TODO: RSDN +
-                switch (adult.Gender)
-                {
-                    case Gender.Male:
-                    {
-                        adult.Partner = GetRandomAdult(Gender.Female);
-                        break;
-                    }
-                    case Gender.Female:
-                    {
-                        adult.Partner = GetRandomAdult(Gender.Male);
-                        break;
-                    }
-                }
+                var partnerGender = 
+                    adult.Gender == Gender.Male
+                    ? Gender.Female
+                    : Gender.Male;
+
+                adult.Partner = GetRandomAdult(partnerGender);
             }
         }
 
