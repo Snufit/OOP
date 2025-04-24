@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FuelManagement
 {
-    public class Helicopter : Transport
+    public class Helicopter : TransportBase
     {
         public string ModelName { get; set; }
         private double fuelConsumption;

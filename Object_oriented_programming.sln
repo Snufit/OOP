@@ -5,7 +5,10 @@ VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuelManagement", "FuelManagements\FuelManagement.csproj", "{625DD084-9CAB-4A2D-BD25-216DA7217F7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab3", "Lab3\Lab3.csproj", "{12F09E15-F013-492D-B348-C5EBA59E66DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleLoader", "Lab3\ConsoleLoader.csproj", "{12F09E15-F013-492D-B348-C5EBA59E66DB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{625DD084-9CAB-4A2D-BD25-216DA7217F7B} = {625DD084-9CAB-4A2D-BD25-216DA7217F7B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

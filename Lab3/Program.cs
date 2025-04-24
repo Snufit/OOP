@@ -5,7 +5,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        ITransport transport;
+        Transport transport;
 
         Console.WriteLine("Выберите транспортное средство (1 - Машина, 2 - Гибрид, 3 - Вертолет):");
         string choice = Console.ReadLine();

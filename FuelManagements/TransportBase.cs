@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FuelManagement
 {
-    public interface Transport
+    public abstract class TransportBase
     {
         string ModelName { get; set; }
         double FuelConsumption { get; } // Метод для получения расхода топлива

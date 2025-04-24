@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FuelManagement
 {
-    public class Car : Transport
+    public class Car : TransportBase
     {
         public string ModelName { get; set; }
         private double fuelConsumption; // Локальная переменная для хранения расхода топлива

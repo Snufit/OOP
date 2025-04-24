@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FuelManagement
 {
-    public class HybridCar : Transport
+    public class HybridCar : TransportBase
     {
         public string ModelName { get; set; }
         private double fuelConsumption;
