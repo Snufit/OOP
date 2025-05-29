@@ -1,26 +1,84 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FuelManagement;
+using System.Threading;
+using System;
 
 namespace FuelManagement
 {
-    public class HybridCar : TransportBase
+    /// <summary>
+    /// Класс Гибридная Машина.
+    /// </summary>
+    public class HybridCar : Car
     {
-        public string ModelName { get; set; }
-        private double fuelConsumption;
+        /// <summary>
+        /// Дополнительный двигатель.
+        /// </summary>
+        private Motor _additionalMotor;
 
-        public double FuelConsumption => fuelConsumption;
-
-        public void InitializeFuelConsumption(double distance, double fuelUsed)
+        /// <summary>
+        /// Конструктор класса Гибридная Машина.
+        /// </summary>
+        /// <param name="motor">Основной Двигатель.</param>
+        /// <param name="mass">Масса.</param>
+        /// <param name="additionalMotor">Дополнительный двигатель.</param>
+        /// <param name="fielPer100km">Расход на 100 км.</param>
+        public HybridCar(Motor motor, double mass, Motor additionalMotor) :
+            base(motor, mass)
         {
-            if (distance <= 0 || fuelUsed <= 0)
-            {
-                throw new ArgumentOutOfRangeException("Distance and fuel used must be positive values.");
-            }
+            AdditionalMotor = additionalMotor;
+        }
 
-            fuelConsumption = fuelUsed / distance * 0.9; // Снижение расхода на 10% для гибридов
+        /// <summary>
+        /// Конструктор с параметрами по умолчанию.
+        /// </summary>
+        public HybridCar() : this(new Motor(100, TypeFuel.Petrol), 1,
+            new Motor(50, TypeFuel.Electricity))
+        { }
+
+        /// <summary>
+        /// Свойство Дополнительный двигатель.
+        /// </summary>
+        public Motor AdditionalMotor
+        {
+            get => _additionalMotor;
+            set
+            {
+                if (value.TypeFuel == Motor.TypeFuel)
+                {
+                    throw new ArgumentException("Вид топлива основного " +
+                        "двигателя и дополнительного должны отличаться");
+                }
+
+                if (value is null)
+                {
+                    throw new NullReferenceException
+                              ("Передано null");
+                }
+
+                _additionalMotor = value;
+            }
+        }
+
+        /// <summary>
+        /// Переопределенный метод Расчета расхода топлива.
+        /// </summary>
+        /// <param name="distanceBasic">Расстояние, пройденное на основном
+        /// двигателе.</param>
+        /// <param name="distanceAdd">Расстояние, пройденное на дополнительном
+        /// двигателе.</param>
+        /// <returns>Расход топлива (л).</returns>
+        public (double, double) CalculateFuel(double distanceBasic,
+            double distanceAdd)
+        {
+            double coeffСonsumptionBasic = Motor.СalculateConsumption();
+
+            double coeffСonsumptionAdd = Motor.СalculateConsumption();
+
+            double consumptionBasic = Mass * distanceBasic *
+                coeffСonsumptionBasic;
+
+            double consumptionAdd = distanceAdd * coeffСonsumptionAdd;
+
+            return (consumptionBasic, consumptionAdd);
         }
     }
 }

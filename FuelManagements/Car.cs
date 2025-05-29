@@ -1,26 +1,64 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FuelManagement;
+using System.Threading;
+using System;
 
 namespace FuelManagement
 {
+    /// <summary>
+    /// Класс Машина.
+    /// </summary>
     public class Car : TransportBase
     {
-        public string ModelName { get; set; }
-        private double fuelConsumption; // Локальная переменная для хранения расхода топлива
+        /// <summary>
+        /// Двигатель.
+        /// </summary>
+        private Motor _motor;
 
-        public double FuelConsumption => fuelConsumption;
-
-        public void InitializeFuelConsumption(double distance, double fuelUsed)
+        /// <summary>
+        /// Конструктор класса Машина.
+        /// </summary>
+        /// <param name="motor">Двигатель.</param>
+        /// <param name="mass">Масса (т).</param>
+        public Car(Motor motor, double mass)
         {
-            if (distance <= 0 || fuelUsed <= 0)
-            {
-                throw new ArgumentOutOfRangeException("Distance and fuel used must be positive values.");
-            }
+            Motor = motor;
+            Mass = mass;
+        }
 
-            fuelConsumption = fuelUsed / distance; // Расчет расхода топлива
+        /// <summary>
+        /// Конструктор с параметрами по умолчанию.
+        /// </summary>
+        public Car() : this(new Motor(100, TypeFuel.Petrol), 1)
+        { }
+
+        /// <summary>
+        /// Свойство Двигатель.
+        /// </summary>
+        public Motor Motor
+        {
+            get => _motor;
+            set
+            {
+                if (value is null)
+                {
+                    throw new NullReferenceException
+                              ("Передано null");
+                }
+
+                _motor = value;
+            }
+        }
+
+        /// <summary>
+        /// Переопределенный метод расчета расхода топлива.
+        /// </summary>
+        /// <param name="distance">Расстояние (км).</param>
+        /// <returns>Расход топлива (л).</returns>
+        public override double CalculateFuel(double distance)
+        {
+            double coeffСonsumption = Motor.СalculateConsumption();
+
+            return distance * coeffСonsumption * Mass;
         }
     }
 }

@@ -1,48 +1,49 @@
-﻿using System;
-using System.Runtime.ConstrainedExecution;
+﻿using FuelManagement;
 
-class Program
+namespace ConsoleLoader
 {
-    static void Main(string[] args)
+    /// <summary>
+    /// Класс Программа.
+    /// </summary>
+    public class Program
     {
-        Transport transport;
-
-        Console.WriteLine("Выберите транспортное средство (1 - Машина, 2 - Гибрид, 3 - Вертолет):");
-        string choice = Console.ReadLine();
-
-        switch (choice)
+        /// <summary>
+        /// Метод Main.
+        /// </summary>
+        internal static void Main()
         {
-            case "1":
-                transport = new Car();
-                break;
-            case "2":
-                transport = new HybridCar();
-                break;
-            case "3":
-                transport = new Helicopter();
-                break;
-            default:
-                Console.WriteLine("Неверный выбор.");
-                return;
-        }
+            bool workProgram = true;
 
-        Console.WriteLine("Введите название модели:");
-        transport.ModelName = Console.ReadLine();
+            while (workProgram)
+            {
+                Console.WriteLine("\n1 - Выполнить расчет расхода топлива" +
+               "\n2 - Выйти");
 
-        Console.WriteLine("Введите расстояние (км):");
-        double distance = Convert.ToDouble(Console.ReadLine());
+                char readProgram = Console.ReadKey().KeyChar;
 
-        Console.WriteLine("Введите количество израсходованного топлива (литры):");
-        double fuelUsed = Convert.ToDouble(Console.ReadLine());
+                switch (readProgram)
+                {
+                    case '1':
+                        {
+                            TransportBase transport = ConsoleTransport.SelectTransport();
+                            ConsoleTransport.СalculateСonsumptionFuel(transport);
+                            break;
+                        }
 
-        try
-        {
-            transport.InitializeFuelConsumption(distance, fuelUsed);
-            Console.WriteLine($"Модель: {transport.ModelName}, Расход топлива: {transport.FuelConsumption} л/100 км");
-        }
-        catch (ArgumentOutOfRangeException ex)
-        {
-            Console.WriteLine($"Ошибка: {ex.Message}");
+                    case '2':
+                        {
+                            Console.WriteLine("\nПрограмма завершена");
+                            workProgram = false;
+                            break;
+                        }
+
+                    default:
+                        {
+                            Console.WriteLine("\nНекорректный ввод. Попробуйте еще раз");
+                            break;
+                        }
+                }
+            }
         }
     }
 }
