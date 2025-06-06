@@ -90,6 +90,7 @@ namespace FuelManagement
                 {TypeFuel.AviationGasoline, 35}
             };
 
+            //TODO: rewrite
             double сonsumption = сonsumptionСapacity * сonsumptionFuel[TypeFuel];
 
             return сonsumption;

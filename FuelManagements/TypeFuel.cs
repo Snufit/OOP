@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace FuelManagement
 {
+    //TODO: XML
     public enum TypeFuel
     {
         /// <summary>

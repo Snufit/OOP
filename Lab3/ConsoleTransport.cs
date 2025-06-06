@@ -15,6 +15,7 @@ namespace ConsoleLoader
         {
             TransportBase transport = new Car();
 
+            //TODO: duplication
             Dictionary<Type, Action<string>> catchDictionary =
                 new Dictionary<Type, Action<string>>()
             {
@@ -409,6 +410,7 @@ namespace ConsoleLoader
                    Console.WriteLine($"\n\tВыберите вид топлива: " +
                         "\n\t1 - бензин" +
                         "\n\t2 - дизель" +
+                        //BUG:
                         "\n\t3 - электричество" +
                         "\n\t4 - газ");
 
@@ -473,6 +475,7 @@ namespace ConsoleLoader
             Action action =
                 () =>
                 {
+                    //TODO: to switch case pattern matching
                     if (transport is HybridCar newHybridCar)
                     {
                         Console.Write($"\nВведите расстояние в км для двигателя," +
