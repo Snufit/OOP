@@ -15,18 +15,8 @@ namespace ConsoleLoader
         {
             TransportBase transport = new Car();
 
-            //TODO: duplication
-            Dictionary<Type, Action<string>> catchDictionary =
-                new Dictionary<Type, Action<string>>()
-            {
-                {
-                    typeof(ArgumentOutOfRangeException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-            };
+            //TODO: duplication +
+            var catchDictionary = GetCatchDictionary();
 
             List<Action> actions = new()
             {
@@ -79,32 +69,7 @@ namespace ConsoleLoader
         /// <returns>Машина.</returns>
         public static Car ReadCar()
         {
-            Dictionary<Type, Action<string>> catchDictionary =
-                new Dictionary<Type, Action<string>>()
-            {
-                {
-                    typeof(ArgumentException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-                {
-                    typeof(FormatException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-                {
-                    typeof(OverflowException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                    },
-                };
-
+            var catchDictionary = GetCatchDictionary();
 
             Car car = new Car();
 
@@ -135,31 +100,7 @@ namespace ConsoleLoader
         /// <returns>Вертолет.</returns>
         public static Helicopter ReadHelicopter()
         {
-            Dictionary<Type, Action<string>> catchDictionary =
-                new Dictionary<Type, Action<string>>()
-            {
-                {
-                    typeof(ArgumentException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-                {
-                    typeof(FormatException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-                {
-                    typeof(OverflowException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-            };
+            var catchDictionary = GetCatchDictionary();
 
             Helicopter helicopter = new Helicopter();
 
@@ -196,31 +137,7 @@ namespace ConsoleLoader
         /// <returns>Гибридная машина.</returns>
         public static HybridCar ReadHybridCar()
         {
-            Dictionary<Type, Action<string>> catchDictionary =
-                new Dictionary<Type, Action<string>>()
-            {
-                {
-                    typeof(ArgumentException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-                {
-                    typeof(FormatException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-                {
-                    typeof(OverflowException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-            };
+            var catchDictionary = GetCatchDictionary();
 
             HybridCar hybridCar = new HybridCar();
 
@@ -262,38 +179,7 @@ namespace ConsoleLoader
         /// за пределы.</exception>
         public static Motor ReadMotor(TransportBase transport)
         {
-            Dictionary<Type, Action<string>> catchDictionary =
-                new Dictionary<Type, Action<string>>()
-            {
-                {
-                    typeof(ArgumentOutOfRangeException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-                {
-                    typeof(ArgumentException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-                {
-                    typeof(FormatException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-                {
-                    typeof(OverflowException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-            };
+            var catchDictionary = GetCatchDictionary();
 
             Motor motor = new Motor();
 
@@ -368,38 +254,7 @@ namespace ConsoleLoader
         /// за пределы.</exception>
         public static Motor ReadMotor(Motor motor)
         {
-            Dictionary<Type, Action<string>> catchDictionary =
-                new Dictionary<Type, Action<string>>()
-            {
-                {
-                    typeof(ArgumentOutOfRangeException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-                {
-                    typeof(ArgumentException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-                {
-                    typeof(FormatException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-                {
-                    typeof(OverflowException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-            };
+            var catchDictionary = GetCatchDictionary();
 
             Motor additionalMotor = new Motor();
 
@@ -460,73 +315,62 @@ namespace ConsoleLoader
         /// <param name="transport">Объект транспорт.</param>
         public static void СalculateСonsumptionFuel(TransportBase transport)
         {
-            Dictionary<Type, Action<string>> catchDictionary =
-                new Dictionary<Type, Action<string>>()
-            {
-                {
-                    typeof(ArgumentOutOfRangeException),
-                    (string message) =>
-                    {
-                        Console.WriteLine($"\nИсключение: {message}");
-                    }
-                },
-            };
+            var catchDictionary = GetCatchDictionary();
 
             Action action =
                 () =>
                 {
-                    //TODO: to switch case pattern matching
-                    if (transport is HybridCar newHybridCar)
+                    //TODO: to switch case pattern matching +
+                    switch (transport)
                     {
-                        Console.Write($"\nВведите расстояние в км для двигателя," +
-                            $" работающего на {newHybridCar.Motor.TypeFuel} " +
-                            $"(нажмите Enter): ");
+                        case HybridCar newHybridCar:
+                            Console.Write($"\nВведите расстояние в км для двигателя," +
+                                $" работающего на {newHybridCar.Motor.TypeFuel} " +
+                                $"(нажмите Enter): ");
 
-                        double firstDistance = Convert.ToDouble(Console.ReadLine());
+                            double firstDistance = Convert.ToDouble(Console.ReadLine());
+                            ReadPositiveDouble(firstDistance);
 
-                        ReadPositiveDouble(firstDistance);
+                            Console.Write($"\nВведите расстояние в км для двигателя," +
+                                $" работающего на {newHybridCar.AdditionalMotor.TypeFuel}" +
+                                $" (нажмите Enter): ");
 
-                        Console.Write($"\nВведите расстояние в км для двигателя," +
-                            $" работающего на {newHybridCar.AdditionalMotor.TypeFuel}" +
-                            $" (нажмите Enter): ");
+                            double secondDistance = Convert.ToDouble(Console.ReadLine());
+                            ReadPositiveDouble(secondDistance);
 
-                        double secondDistance = Convert.ToDouble(Console.ReadLine());
+                            var consumption = newHybridCar.CalculateFuel(firstDistance, secondDistance);
+                            var consumptionBasic = Math.Round(consumption.Item1, 1);
+                            var consumptionAdd = Math.Round(consumption.Item2, 1);
 
-                        ReadPositiveDouble(secondDistance);
+                            string unitBasic = newHybridCar.Motor.TypeFuel == TypeFuel.Electricity ? "кВт·ч" : "л";
+                            string unitAdd = newHybridCar.AdditionalMotor.TypeFuel == TypeFuel.Electricity ? "кВт·ч" : "л";
 
-                        var consumption = newHybridCar.CalculateFuel(firstDistance, secondDistance);
+                            Console.Write($"\nРасход топлива для прохождения расстояния" +
+                                $" {firstDistance} км составит {consumptionBasic} {unitBasic}." +
+                                $", для {secondDistance} км - {consumptionAdd} {unitAdd}.\n");
+                            break;
 
-                        var consumptionBasic = Math.Round(consumption.Item1, 1);
-                        var consumptionAdd = Math.Round(consumption.Item2, 1);
+                        case Car newCar:
+                            Console.Write("\nВведите расстояние в км (нажмите Enter): ");
+                            double distance = Convert.ToDouble(Console.ReadLine());
+                            ReadPositiveDouble(distance);
+                            Console.Write($"\nРасход топлива для прохождения расстояния" +
+                                $" {distance} км составит" +
+                                $" {Math.Round(newCar.CalculateFuel(distance), 1)} л.\n");
+                            break;
 
-                        Console.Write($"\nРасход топлива для прохождения расстояния" +
-                            $" {firstDistance} км составит {consumptionBasic} л." +
-                            $", для {secondDistance} км - {consumptionAdd} л.\n");
-                    }
-                    else if (transport is Car newCar)
-                    {
-                        Console.Write("\nВведите расстояние в км (нажмите Enter): ");
+                        case Helicopter newHelicopter:
+                            Console.Write("\nВведите длительность полета в часах" +
+                                " (нажмите Enter): ");
+                            double flightHours = Convert.ToDouble(Console.ReadLine());
+                            ReadPositiveDouble(flightHours);
+                            Console.Write($"\nРасход топлива для полета {flightHours} ч" +
+                                $" составит {Math.Round(newHelicopter.CalculateFuel(flightHours), 1)} л.\n");
+                            break;
 
-                        double distance = Convert.ToDouble(Console.ReadLine());
-
-                        ReadPositiveDouble(distance);
-
-                        Console.Write($"\nРасход топлива для прохождения расстояния" +
-                           $" {distance} км составит" +
-                           $" {Math.Round(newCar.CalculateFuel(distance), 1)} л.\n");
-                    }
-
-                    else if (transport is Helicopter newHelicopter)
-                    {
-                        Console.Write("\nВведите длительность полета в часах" +
-                            " (нажмите Enter): ");
-
-                        double distance = Convert.ToDouble(Console.ReadLine());
-
-                        ReadPositiveDouble(distance);
-
-                        Console.Write($"\nРасход топлива для полета {distance} ч" +
-                            $" составит {Math.Round(newHelicopter.CalculateFuel(distance), 1)} л.\n");
+                        default:
+                            Console.WriteLine("Неизвестный тип транспорта.");
+                            break;
                     }
                 };
 
@@ -544,6 +388,33 @@ namespace ConsoleLoader
                 throw new ArgumentOutOfRangeException("Число должно быть" +
                     " положительным");
             }
+        }
+        /// <summary>
+        /// Словарь для обработки исключений.
+        /// </summary>
+        /// </returns>
+        private static Dictionary<Type, Action<string>> GetCatchDictionary()
+        {
+            return new Dictionary<Type, Action<string>>
+            {
+                {
+                    typeof(ArgumentOutOfRangeException),
+                    (msg) => Console.WriteLine($"\nИсключение: {msg}")
+                },
+                {
+                    typeof(ArgumentException),
+                    (msg) => Console.WriteLine($"\nИсключение: {msg}")
+                },
+                {
+                    typeof(FormatException),
+                    (msg) => Console.WriteLine($"\nИсключение: {msg}")
+                },
+                {
+                    typeof(OverflowException),
+                    (msg) => Console.WriteLine($"\nИсключение: {msg}")
+                },
+            };
+
         }
 
         /// <summary>

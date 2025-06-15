@@ -70,13 +70,31 @@ namespace FuelManagement
             double distanceAdd)
         {
             double coeffСonsumptionBasic = Motor.СalculateConsumption();
+            double coeffСonsumptionAdd = AdditionalMotor.СalculateConsumption();
 
-            double coeffСonsumptionAdd = Motor.СalculateConsumption();
+            double consumptionBasic;
+            double consumptionAdd;
+            double massFactor = 1 + (Mass / 1000.0) * 0.1;
 
-            double consumptionBasic = Mass * distanceBasic *
-                coeffСonsumptionBasic;
+            //TODO: rewrite +
 
-            double consumptionAdd = distanceAdd * coeffСonsumptionAdd;
+            if (Motor.TypeFuel == TypeFuel.Electricity)
+            {
+                consumptionBasic = (distanceBasic / 100) * coeffСonsumptionBasic * massFactor; 
+            }
+            else
+            {
+                consumptionBasic = (distanceBasic / 100) * coeffСonsumptionBasic * massFactor;
+            }
+
+            if (AdditionalMotor.TypeFuel == TypeFuel.Electricity)
+            {
+                consumptionAdd = (distanceAdd / 100) * coeffСonsumptionAdd * massFactor;
+            }
+            else
+            {
+                consumptionAdd = (distanceAdd / 100) * coeffСonsumptionAdd * massFactor; 
+            }
 
             return (consumptionBasic, consumptionAdd);
         }

@@ -82,7 +82,7 @@ namespace FuelManagement
 
             Dictionary<TypeFuel, double> сonsumptionFuel = new Dictionary<TypeFuel, double>()
             {
-                {TypeFuel.Electricity, 0.75},
+                {TypeFuel.Electricity, 0.15},
                 {TypeFuel.Diesel, 0.90},
                 {TypeFuel.Petrol, 0.95},
                 {TypeFuel.Gas, 1},
@@ -90,7 +90,6 @@ namespace FuelManagement
                 {TypeFuel.AviationGasoline, 35}
             };
 
-            //TODO: rewrite
             double сonsumption = сonsumptionСapacity * сonsumptionFuel[TypeFuel];
 
             return сonsumption;
