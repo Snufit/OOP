@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace FuelManagement
 {
-    //TODO: XML
+    //TODO: XML +
+    /// <summary>
+    /// Вид топлива.
+    /// </summary>
     public enum TypeFuel
     {
         /// <summary>
