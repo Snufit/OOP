@@ -15,7 +15,6 @@ namespace ConsoleLoader
         {
             TransportBase transport = new Car();
 
-            //TODO: duplication +
             var catchDictionary = GetCatchDictionary();
 
             List<Action> actions = new()
@@ -320,7 +319,7 @@ namespace ConsoleLoader
             Action action =
                 () =>
                 {
-                    //TODO: to switch case pattern matching +
+                    //TODO: RSDN
                     switch (transport)
                     {
                         case HybridCar newHybridCar:
