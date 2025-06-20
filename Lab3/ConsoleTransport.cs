@@ -82,9 +82,7 @@ namespace ConsoleLoader
 
                 ()=>
                 {
-                    Console.Write($"\nВведите массу машины в тоннах" +
-                        $" (нажмите Enter): ");
-                    car.Mass = Convert.ToDouble(Console.ReadLine());
+                    car.Mass = ReadMassInTons();
                 },
             };
 
@@ -158,9 +156,7 @@ namespace ConsoleLoader
 
                 ()=>
                 {
-                    Console.Write($"\nВведите массу машины в тоннах" +
-                        $" (нажмите Enter): ");
-                    hybridCar.Mass = Convert.ToDouble(Console.ReadLine());
+                    hybridCar.Mass = ReadMassInTons();
                 },
             };
 
@@ -232,10 +228,7 @@ namespace ConsoleLoader
 
                 ()=>
                 {
-                    Console.Write($"\n\tВведите мощность двигателя в л.с " +
-                        $"(нажмите Enter): ");
-
-                    motor.Capacity = Convert.ToDouble(Console.ReadLine());
+                    motor.Capacity = ReadEnginePower();
                 },
             };
 
@@ -319,20 +312,21 @@ namespace ConsoleLoader
             Action action =
                 () =>
                 {
-                    //TODO: RSDN
+                    //TODO: RSDN +
                     switch (transport)
                     {
                         case HybridCar newHybridCar:
-                            Console.Write($"\nВведите расстояние в км для двигателя," +
-                                $" работающего на {newHybridCar.Motor.TypeFuel} " +
+                        {
+                            Console.Write($"\nВведите расстояние в км для двигателя, " +
+                                $"работающего на {newHybridCar.Motor.TypeFuel} " +
                                 $"(нажмите Enter): ");
 
                             double firstDistance = Convert.ToDouble(Console.ReadLine());
                             ReadPositiveDouble(firstDistance);
 
-                            Console.Write($"\nВведите расстояние в км для двигателя," +
-                                $" работающего на {newHybridCar.AdditionalMotor.TypeFuel}" +
-                                $" (нажмите Enter): ");
+                            Console.Write($"\nВведите расстояние в км для двигателя, " +
+                                $"работающего на {newHybridCar.AdditionalMotor.TypeFuel} " +
+                                $"(нажмите Enter): ");
 
                             double secondDistance = Convert.ToDouble(Console.ReadLine());
                             ReadPositiveDouble(secondDistance);
@@ -341,39 +335,96 @@ namespace ConsoleLoader
                             var consumptionBasic = Math.Round(consumption.Item1, 1);
                             var consumptionAdd = Math.Round(consumption.Item2, 1);
 
-                            string unitBasic = newHybridCar.Motor.TypeFuel == TypeFuel.Electricity ? "кВт·ч" : "л";
-                            string unitAdd = newHybridCar.AdditionalMotor.TypeFuel == TypeFuel.Electricity ? "кВт·ч" : "л";
+                            string unitBasic = 
+                            (newHybridCar.Motor.TypeFuel == TypeFuel.Electricity) ? "кВт·ч" : "л";
+                            string unitAdd = 
+                            (newHybridCar.AdditionalMotor.TypeFuel == TypeFuel.Electricity) ? "кВт·ч" : "л";
 
-                            Console.Write($"\nРасход топлива для прохождения расстояния" +
-                                $" {firstDistance} км составит {consumptionBasic} {unitBasic}." +
-                                $", для {secondDistance} км - {consumptionAdd} {unitAdd}.\n");
-                            break;
+                            Console.Write($"\nРасход топлива для прохождения расстояния " +
+                                $"{firstDistance} км составит {consumptionBasic} {unitBasic}. " +
+                                $"Для {secondDistance} км - {consumptionAdd} {unitAdd}.\n");
+                        }
+                        break;
 
                         case Car newCar:
+                        {
                             Console.Write("\nВведите расстояние в км (нажмите Enter): ");
                             double distance = Convert.ToDouble(Console.ReadLine());
                             ReadPositiveDouble(distance);
-                            Console.Write($"\nРасход топлива для прохождения расстояния" +
-                                $" {distance} км составит" +
-                                $" {Math.Round(newCar.CalculateFuel(distance), 1)} л.\n");
-                            break;
+
+                            double consumption = newCar.CalculateFuel(distance);
+                            string unit = newCar.Motor.TypeFuel == TypeFuel.Electricity ? "кВт·ч" : "л";
+
+                            Console.Write($"\nРасход топлива для прохождения расстояния " +
+                                $"{distance} км составит " +
+                                $"{Math.Round(consumption, 1)} {unit}.\n");
+                        }
+                        break;
 
                         case Helicopter newHelicopter:
-                            Console.Write("\nВведите длительность полета в часах" +
-                                " (нажмите Enter): ");
+                        {
+                            Console.Write("\nВведите длительность полета в часах (нажмите Enter): ");
                             double flightHours = Convert.ToDouble(Console.ReadLine());
                             ReadPositiveDouble(flightHours);
-                            Console.Write($"\nРасход топлива для полета {flightHours} ч" +
-                                $" составит {Math.Round(newHelicopter.CalculateFuel(flightHours), 1)} л.\n");
-                            break;
+                            Console.Write($"\nРасход топлива для полета {flightHours} ч " +
+                                $"составит {Math.Round(newHelicopter.CalculateFuel(flightHours), 1)} л.\n");
+                        }
+                        break;
 
                         default:
+                        {
                             Console.WriteLine("Неизвестный тип транспорта.");
-                            break;
+                        }
+                        break;
                     }
                 };
 
             ActionHandler(action, catchDictionary);
+        }
+
+        /// <summary>
+        /// Метод ввода мощности двигателя в л.с.
+        /// </summary>
+        /// <returns>
+        public static double ReadEnginePower()
+        {
+            double power;
+            do
+            {
+                Console.Write($"\n\tВведите мощность двигателя в л.с. (не более 500 л.с.)" +
+                    $" (нажмите Enter): ");
+                power = Convert.ToDouble(Console.ReadLine());
+
+                if (power < 1 || power > 500)
+                {
+                    Console.WriteLine($"\n\tПожалуйста, введите мощность двигателя в пределах от 10 до 500 л.с.");
+                }
+            } while (power < 1 || power > 500);
+
+            return power;
+        }
+
+        /// <summary>
+        /// Метод ввода массы автомобиля в тоннах.
+        /// </summary>
+        /// <returns>
+        public static double ReadMassInTons()
+        {
+            double mass;
+            do
+            {
+                Console.Write($"\n\tВведите массу машины в тоннах (не более 10 тонн)" +
+                        $" (нажмите Enter): ");
+                
+                mass = Convert.ToDouble(Console.ReadLine());
+
+                if (mass < 0.1 || mass > 10.0)
+                {
+                    Console.WriteLine($"\n\tПожалуйста, введите массу в пределах от 0,1 до 10 тонн.");
+                }
+            } while (mass < 0.1 || mass > 10.0);
+
+            return mass;
         }
 
         /// <summary>

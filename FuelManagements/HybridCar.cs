@@ -70,34 +70,12 @@ namespace FuelManagement
             double distanceAdd)
         {
             double coeffСonsumptionBasic = Motor.СalculateConsumption();
-            double consumptionBasic = (distanceBasic / 100) * coeffConsumptionBasic;
-
             double coeffСonsumptionAdd = AdditionalMotor.СalculateConsumption();
-            double consumptionAdd = (distanceAdd / 100) * coeffConsumptionAdd;
-
-            double consumptionAdd;
             double massFactor = 1 + (Mass / 1000.0) * 0.1;
 
-            //TODO: rewrite
-
-            // Форматируем расход в зависимости от типа топлива
-            if (Motor.TypeFuel == TypeFuel.Electricity)
-            {
-                consumptionBasic = Math.Round(consumptionBasic, 1); // Конвертируем в кВт·ч
-            }
-            else
-            {
-                consumptionBasic = Math.Round(consumptionBasic, 1); // Оставляем в литрах
-            }
-
-            if (AdditionalMotor.TypeFuel == TypeFuel.Electricity)
-            {
-                consumptionAdd = Math.Round(consumptionAdd, 1); // Конвертируем в кВт·ч
-            }
-            else
-            {
-                consumptionAdd = Math.Round(consumptionAdd, 1); // Оставляем в литрах
-            }
+            //TODO: rewrite +
+            double consumptionBasic = distanceBasic * coeffСonsumptionBasic * massFactor;
+            double consumptionAdd = distanceAdd * coeffСonsumptionAdd * massFactor;
 
             return (consumptionBasic, consumptionAdd);
         }
