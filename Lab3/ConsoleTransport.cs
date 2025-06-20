@@ -236,64 +236,10 @@ namespace ConsoleLoader
         /// <summary>
         /// Метод Ввода данных о Гибридном Двигателе.
         /// </summary>
-        /// <param name="motor">Основной двигатель.</param>
+        /// <param name="mainMotor">Основной двигатель.</param>
         /// <returns>Гибридный двигатель.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Выход
         /// за пределы.</exception>
-        public static Motor ReadMotor(Motor motor)
-        {
-            var catchDictionary = GetCatchDictionary();
-
-            Motor additionalMotor = new Motor();
-
-            List<Action> actions = new()
-            {
-                ()=>
-                {
-                   Console.WriteLine($"\n\tВыберите вид топлива: " +
-                        "\n\t1 - бензин" +
-                        "\n\t2 - дизель" +
-                        //BUG:+
-                        "\n\t3 - электричество" +
-                        "\n\t4 - газ");
-
-                   char keyInfo = Console.ReadKey().KeyChar;
-
-                   Dictionary<char, TypeFuel> сonsumptionFuel = new()
-                   {
-                        {'1', TypeFuel.Petrol},
-                        {'2', TypeFuel.Diesel},
-                        {'3', TypeFuel.Electricity},
-                        {'4', TypeFuel.Gas},
-                   };
-
-                   if(!сonsumptionFuel.ContainsKey(keyInfo))
-                   {
-                       throw new ArgumentOutOfRangeException();
-                   }
-
-                   if (сonsumptionFuel[keyInfo] != motor.TypeFuel)
-                   {
-                       additionalMotor.TypeFuel = сonsumptionFuel[keyInfo];
-                   }
-                   else
-                   {
-                       throw new ArgumentException ("Гибридная машина " +
-                           "не может иметь одинаковые двигатели");
-                   }
-                },
-
-                ()=>
-                {
-                    motor.Capacity = ReadEnginePower(motor.TypeFuel);
-                },
-            };
-
-            ActionsHandler(actions, catchDictionary);
-
-            return additionalMotor;
-        }
-
         public static Motor ReadAdditionalMotor(Motor mainMotor)
         {
             var catchDictionary = GetCatchDictionary();
