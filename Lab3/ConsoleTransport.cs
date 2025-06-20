@@ -106,20 +106,16 @@ namespace ConsoleLoader
                 ()=>
                 {
                      Console.WriteLine($"\nВведите данные о двигателе");
-                     helicopter.Motor = ReadMotor(helicopter);
+                     helicopter.Motor.Capacity = ReadHelicopterEnginePower();
                 },
 
                 ()=>
                 {
-                    Console.Write($"\nВведите массу вертолета в тоннах" +
-                        $" (нажмите Enter): ");
-                    helicopter.Mass = Convert.ToDouble(Console.ReadLine());
+                    helicopter.Mass = ReadHelicopterMassInTons();
                 },
                 ()=>
                 {
-                    Console.Write($"\nВведите длину лопастей вертолета в" +
-                        $" метрах (нажмите Enter): ");
-                    helicopter.BladeLength = Convert.ToDouble(Console.ReadLine());
+                    helicopter.BladeLength = ReadBladeLength();
                 },
             };
 
@@ -151,7 +147,7 @@ namespace ConsoleLoader
                 {
                     Console.WriteLine($"\nВведите данные о дополнительном" +
                         $" двигателе");
-                    hybridCar.AdditionalMotor = ReadMotor(hybridCar.Motor);
+                    hybridCar.AdditionalMotor = ReadAdditionalMotor(hybridCar.Motor);
                 },
 
                 ()=>
@@ -228,7 +224,7 @@ namespace ConsoleLoader
 
                 ()=>
                 {
-                    motor.Capacity = ReadEnginePower();
+                    motor.Capacity = ReadEnginePower(motor.TypeFuel);
                 },
             };
 
@@ -257,7 +253,7 @@ namespace ConsoleLoader
                    Console.WriteLine($"\n\tВыберите вид топлива: " +
                         "\n\t1 - бензин" +
                         "\n\t2 - дизель" +
-                        //BUG:
+                        //BUG:+
                         "\n\t3 - электричество" +
                         "\n\t4 - газ");
 
@@ -289,10 +285,56 @@ namespace ConsoleLoader
 
                 ()=>
                 {
-                    Console.Write($"\n\tВведите мощность двигателя в л.с " +
-                        $"(нажмите Enter): ");
+                    motor.Capacity = ReadEnginePower(motor.TypeFuel);
+                },
+            };
 
-                    motor.Capacity = Convert.ToDouble(Console.ReadLine());
+            ActionsHandler(actions, catchDictionary);
+
+            return additionalMotor;
+        }
+
+        public static Motor ReadAdditionalMotor(Motor mainMotor)
+        {
+            var catchDictionary = GetCatchDictionary();
+
+            Motor additionalMotor = new Motor();
+
+            List<Action> actions = new()
+            {
+                () =>
+                {
+                    Console.WriteLine($"\n\tВыберите вид топлива для дополнительного двигателя: " +
+                    "\n\t1 - бензин" +
+                    "\n\t2 - дизель" +
+                    "\n\t3 - электричество" +
+                    "\n\t4 - газ");
+
+                    char keyInfo = Console.ReadKey().KeyChar;
+
+                    Dictionary<char, TypeFuel> consumptionFuel = new()
+                    {
+                        { '1', TypeFuel.Petrol },
+                        { '2', TypeFuel.Diesel },
+                        { '3', TypeFuel.Electricity },
+                        { '4', TypeFuel.Gas },
+                    };
+
+                    if (!consumptionFuel.ContainsKey(keyInfo))
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    additionalMotor.TypeFuel = consumptionFuel[keyInfo];
+
+                    if (additionalMotor.TypeFuel == mainMotor.TypeFuel)
+                    {
+                        throw new ArgumentException ("Гибридная машина " +
+                            "не может иметь одинаковые двигатели");
+                    }
+                },
+                () =>
+                {
+                    additionalMotor.Capacity = ReadEnginePower(additionalMotor.TypeFuel);
                 },
             };
 
@@ -386,20 +428,21 @@ namespace ConsoleLoader
         /// Метод ввода мощности двигателя в л.с.
         /// </summary>
         /// <returns>
-        public static double ReadEnginePower()
+        public static double ReadEnginePower(TypeFuel fuelType)
         {
             double power;
             do
             {
-                Console.Write($"\n\tВведите мощность двигателя в л.с. (не более 500 л.с.)" +
-                    $" (нажмите Enter): ");
+                Console.Write($"\n\tВведите мощность двигателя в л.с. " +
+                      $"(не более {GetMaxPowerByFuelType(fuelType)} л.с.) (нажмите Enter): ");
                 power = Convert.ToDouble(Console.ReadLine());
 
-                if (power < 1 || power > 500)
+                if (power < GetMinPowerByFuelType(fuelType) || power > GetMaxPowerByFuelType(fuelType))
                 {
-                    Console.WriteLine($"\n\tПожалуйста, введите мощность двигателя в пределах от 10 до 500 л.с.");
+                    Console.WriteLine($"\n\tПожалуйста, введите мощность двигателя в пределах от " +
+                        $"{GetMinPowerByFuelType(fuelType)} до {GetMaxPowerByFuelType(fuelType)} л.с.");
                 }
-            } while (power < 1 || power > 500);
+            } while (power < GetMinPowerByFuelType(fuelType) || power > GetMaxPowerByFuelType(fuelType));
 
             return power;
         }
@@ -425,6 +468,94 @@ namespace ConsoleLoader
             } while (mass < 0.1 || mass > 10.0);
 
             return mass;
+        }
+
+        /// <summary>
+        /// Метод ввода мощности вертолета в л.с. с учетом ограничений.
+        /// </summary>
+        /// <returns>Мощность вертолета в л.с.</returns>
+        public static double ReadHelicopterEnginePower()
+        {
+            double power;
+            do
+            {
+                Console.Write($"\n\tВведите мощность двигателя вертолета в л.с. (не более 3600 л.с.)" +
+                              $" (нажмите Enter): ");
+                power = Convert.ToDouble(Console.ReadLine());
+
+                if (power < 110 || power > 3600)
+                {
+                    Console.WriteLine($"\n\tПожалуйста, введите мощность двигателя в пределах от 110 до 3600 л.с.");
+                }
+            } while (power < 110 || power > 3600);
+
+            return power;
+        }
+
+        /// <summary>
+        /// Метод ввода массы вертолета в тоннах с учетом ограничений.
+        /// </summary>
+        /// <returns>Масса вертолета в тоннах.</returns>
+        public static double ReadHelicopterMassInTons()
+        {
+            double mass;
+            do
+            {
+                Console.Write($"\n\tВведите массу вертолета в тоннах (не более 23 тонн)" +
+                              $" (нажмите Enter): ");
+
+                mass = Convert.ToDouble(Console.ReadLine());
+
+                if (mass < 0.1 || mass > 23)
+                {
+                    Console.WriteLine($"\n\tПожалуйста, введите массу в пределах от 0,1 до 23 тонн.");
+                }
+            } while (mass < 0.1 || mass > 23);
+
+            return mass;
+        }
+
+        /// <summary>
+        /// Метод ввода длины лопастей вертолета в метрах с учетом ограничений.
+        /// </summary>
+        /// <returns>Длина лопастей вертолета в метрах.</returns>
+        public static double ReadBladeLength()
+        {
+            double length;
+            do
+            {
+                Console.Write($"\n\tВведите длину лопастей вертолета в метрах (не более 10 метров)" +
+                              $" (нажмите Enter): ");
+
+                length = Convert.ToDouble(Console.ReadLine());
+
+                if (length < 1 || length > 10) 
+                {
+                    Console.WriteLine($"\n\tПожалуйста, введите длину в пределах от 1 до 10 метров.");
+                }
+            } while (length < 1 || length > 10);
+
+            return length;
+        }
+
+        /// <summary>
+        /// Метод получения минимальной допустимой мощности для заданного типа топлива.
+        /// </summary>
+        /// <param name="fuelType">Тип топлива.</param>
+        /// <returns>Минимальная мощность в л.с.</returns>
+        private static double GetMinPowerByFuelType(TypeFuel fuelType)
+        {
+            return (fuelType == TypeFuel.Electricity) ? 1 : 1;
+        }
+
+        /// <summary>
+        /// Метод получения максимальной допустимой мощности для заданного типа топлива.
+        /// </summary>
+        /// <param name="fuelType">Тип топлива.</param>
+        /// <returns>Максимальная мощность в л.с.</returns>
+        private static double GetMaxPowerByFuelType(TypeFuel fuelType)
+        {
+            return (fuelType == TypeFuel.Electricity) ? 800 : 1000;
         }
 
         /// <summary>
