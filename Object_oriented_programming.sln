@@ -10,6 +10,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleLoader", "Lab3\Conso
 		{625DD084-9CAB-4A2D-BD25-216DA7217F7B} = {625DD084-9CAB-4A2D-BD25-216DA7217F7B}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "View", "WinForms\View.csproj", "{B4C3470A-DA05-459E-A17B-B6B2521A2F1A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{12F09E15-F013-492D-B348-C5EBA59E66DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12F09E15-F013-492D-B348-C5EBA59E66DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12F09E15-F013-492D-B348-C5EBA59E66DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4C3470A-DA05-459E-A17B-B6B2521A2F1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4C3470A-DA05-459E-A17B-B6B2521A2F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4C3470A-DA05-459E-A17B-B6B2521A2F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4C3470A-DA05-459E-A17B-B6B2521A2F1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
