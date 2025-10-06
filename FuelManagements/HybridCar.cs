@@ -67,7 +67,6 @@ namespace FuelManagement
         /// <returns>Общий расход топлива (л).</returns>
         public override double CalculateFuel(double distance)
         {
-            // Предполагаем, что распределение 50%/50% между двигателями
             double basicRatio = 0.5;
             double addRatio = 0.5;
 
