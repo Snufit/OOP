@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using View;
 
-namespace WinForms
+namespace View
 {
     internal static class Program
     {
@@ -15,8 +15,9 @@ namespace WinForms
         [STAThread]
         static void Main()
         {
-            ApplicationConfiguration.Initialize();
-            Application.Run(new BasicForm());
+            Application.EnableVisualStyles(); // включает визуальные стили
+            Application.SetCompatibleTextRenderingDefault(false); // классическая отрисовка текста
+            Application.Run(new BasicForm()); // главная форма
         }
     }
 }

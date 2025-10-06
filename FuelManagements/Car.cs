@@ -1,5 +1,4 @@
 ﻿using FuelManagement;
-using System.Threading;
 using System;
 
 namespace FuelManagement
@@ -47,6 +46,24 @@ namespace FuelManagement
 
                 _motor = value;
             }
+        }
+
+        /// <inheritdoc/>
+        public override string Info
+        {
+            get => $"{Motor.Info} \nМасса: {Mass} т.";
+        }
+
+        /// <inheritdoc/>
+        public override string TypeTransport
+        {
+            get => "Машина";
+        }
+
+        /// <inheritdoc/>
+        public override string FuelConsumption
+        {
+            get => $"{Math.Round(CalculateFuel(100), 2)} л. на 100 км.";
         }
 
         /// <summary>

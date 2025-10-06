@@ -1,5 +1,4 @@
 ﻿using FuelManagement;
-using System.Threading;
 using System;
 
 namespace FuelManagement
@@ -46,6 +45,12 @@ namespace FuelManagement
             get => _bladeLength;
             set
             {
+                if (double.IsNaN(value))
+                {
+                    throw new ArgumentException
+                        ("Длина лопастей должна быть задана");
+                }
+
                 if (value <= 0)
                 {
                     throw new ArgumentException
@@ -72,6 +77,24 @@ namespace FuelManagement
 
                 _motor = value;
             }
+        }
+
+        /// <inheritdoc/>
+        public override string Info
+        {
+            get => $"{Motor.Info}\nМасса: {Mass} т.\nДлина лопастей: {BladeLength} м.";
+        }
+
+        /// <inheritdoc/>
+        public override string TypeTransport
+        {
+            get => "Вертолет";
+        }
+
+        /// <inheritdoc/>
+        public override string FuelConsumption
+        {
+            get => $"{Math.Round(CalculateFuel(1), 2)} л. в час";
         }
 
         /// <summary>

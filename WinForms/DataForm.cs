@@ -42,7 +42,8 @@ namespace View
         /// <summary>
         /// Словарь тип топлива.
         /// </summary>
-        private static readonly Dictionary<string, TypeFuel> _typesFuel = new()
+        private static readonly Dictionary<string, TypeFuel> _typesFuel =
+            new Dictionary<string, TypeFuel>()
         {
             {"Бензин", TypeFuel.Petrol},
             {"Дизель", TypeFuel.Diesel},
@@ -258,23 +259,20 @@ namespace View
             TypeTransport typeTransport =
                 _typesTransports[_comboBoxTransport.Text];
 
-            string[] namesTransports = _typesFuel.Keys.ToArray();
-
-            Dictionary<TypeTransport, string[]> fuelTypes = new()
+            Dictionary<TypeTransport, string[]> fuelTypes =
+                new Dictionary<TypeTransport, string[]>()
             {
                 {
                     TypeTransport.Car,
-                    [namesTransports[0], namesTransports[1],
-                     namesTransports[2], namesTransports[3]]
+                    new string[] { "Бензин", "Дизель", "Газ", "Электричество" }
                 },
                 {
                     TypeTransport.HybridCar,
-                    [namesTransports[0], namesTransports[1],
-                     namesTransports[2], namesTransports[3]]
+                    new string[] { "Бензин", "Дизель", "Газ", "Электричество" }
                 },
                 {
                     TypeTransport.Helicopter,
-                    [namesTransports[4], namesTransports[5]]
+                    new string[] { "Авиационный бензин", "Реактивное топливо" }
                 },
             };
 

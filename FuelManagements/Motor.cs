@@ -1,8 +1,6 @@
-﻿using System;
+﻿using FuelManagement;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FuelManagement
 {
@@ -15,6 +13,20 @@ namespace FuelManagement
         /// Мощность двигателя.
         /// </summary>
         private double _capacity;
+
+        /// <summary>
+        /// Словарь тип топлива.
+        /// </summary>
+        private static readonly Dictionary<TypeFuel, string> _typesFuel =
+            new Dictionary<TypeFuel, string>()
+        {
+            {TypeFuel.Petrol, "Бензин"},
+            {TypeFuel.Diesel, "Дизель"},
+            {TypeFuel.Electricity, "Электричество"},
+            {TypeFuel.Gas, "Газ"},
+            {TypeFuel.AviationKerosene, "Авиационный керосин"},
+            {TypeFuel.AviationGasoline, "Авиационный бензин"},
+        };
 
         /// <summary>
         /// Конструктор класса Двигатель.
@@ -41,6 +53,12 @@ namespace FuelManagement
             get => _capacity;
             set
             {
+                if (double.IsNaN(value))
+                {
+                    throw new ArgumentException
+                        ("Мощность должна быть задана");
+                }
+
                 if (value <= 0)
                 {
                     throw new ArgumentException
@@ -57,6 +75,14 @@ namespace FuelManagement
         public TypeFuel TypeFuel
         {
             get; set;
+        }
+
+        /// <summary>
+        /// Информация о двигателе.
+        /// </summary>
+        public string Info
+        {
+            get => $"Тип топлива: {_typesFuel[TypeFuel]}\nМощность: {Capacity} л.с.";
         }
 
         /// <summary>
@@ -80,9 +106,10 @@ namespace FuelManagement
                 сonsumptionСapacity = 0.1;
             }
 
-            Dictionary<TypeFuel, double> сonsumptionFuel = new Dictionary<TypeFuel, double>()
+            Dictionary<TypeFuel, double> сonsumptionFuel =
+                new Dictionary<TypeFuel, double>()
             {
-                {TypeFuel.Electricity, 0.15},
+                {TypeFuel.Electricity, 0.75},
                 {TypeFuel.Diesel, 0.90},
                 {TypeFuel.Petrol, 0.95},
                 {TypeFuel.Gas, 1},
