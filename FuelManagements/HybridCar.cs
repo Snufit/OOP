@@ -97,8 +97,6 @@ namespace FuelManagement
 
             double consumptionBasic = distanceBasic * coeffBasic * Mass;
             double consumptionAdd = distanceAdd * coeffAdd * Mass;
-            double consumptionAdd = distanceAdd * coeffСonsumptionAdd * massFactor;
-            double consumptionAdd = distanceAdd * coeffСonsumptionAdd * massFactor;
 
             return (consumptionBasic, consumptionAdd);
         }
