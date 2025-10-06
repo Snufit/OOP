@@ -11,6 +11,9 @@ namespace FuelManagement
     [XmlInclude(typeof(Car))]
     [XmlInclude(typeof(HybridCar))]
     [XmlInclude(typeof(Helicopter))]
+    /// <summary>
+    /// Абстрактный класс Транспорт.
+    /// </summary>
     public abstract class TransportBase
     {
         /// <summary>
@@ -21,18 +24,11 @@ namespace FuelManagement
         /// <summary>
         /// Свойство Масса.
         /// </summary>
-        [Browsable(false)]
         public double Mass
         {
             get => _mass;
             set
             {
-                if (double.IsNaN(value))
-                {
-                    throw new ArgumentException
-                        ("Масса должна быть задана");
-                }
-
                 if (value <= 0)
                 {
                     throw new ArgumentException
@@ -42,24 +38,6 @@ namespace FuelManagement
                 _mass = value;
             }
         }
-
-        /// <summary>
-        /// Тип транспорта.
-        /// </summary>
-        [DisplayName("Вид транспорта")]
-        public abstract string TypeTransport { get; }
-
-        /// <summary>
-        /// Информация о транспорте.
-        /// </summary>
-        [DisplayName("Основная информация")]
-        public abstract string Info { get; }
-
-        /// <summary>
-        /// Расход топлива.
-        /// </summary>
-        [DisplayName("Расход топлива")]
-        public abstract string FuelConsumption { get; }
 
         /// <summary>
         /// Метод расчета расхода топлива.
