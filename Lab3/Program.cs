@@ -23,6 +23,7 @@ namespace ConsoleLoader
 
                 switch (readProgram)
                 {
+                    //TODO: RSDN
                     case '1':
                         {
                             TransportBase transport = ConsoleTransport.SelectTransport();

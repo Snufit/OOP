@@ -67,17 +67,16 @@ namespace FuelManagement
         /// <returns>Общий расход топлива (л).</returns>
         public override double CalculateFuel(double distance)
         {
+            //TODO: to const
             double basicRatio = 0.5;
-            double addRatio = 0.5;
-
             double distanceBasic = distance * basicRatio;
-            double distanceAdd = distance * addRatio;
-
             double coeffBasic = Motor.СalculateConsumption();
-            double coeffAdd = AdditionalMotor.СalculateConsumption();
-
-            //TODO: rewrite +
             double consumptionBasic = distanceBasic * coeffBasic * Mass;
+
+            //TODO: to const
+            double addRatio = 0.5;
+            double distanceAdd = distance * addRatio;
+            double coeffAdd = AdditionalMotor.СalculateConsumption();
             double consumptionAdd = distanceAdd * coeffAdd * Mass;
 
             return consumptionBasic + consumptionAdd;
@@ -89,6 +88,7 @@ namespace FuelManagement
         /// <param name="distanceBasic">Расстояние на основном двигателе (км).</param>
         /// <param name="distanceAdd">Расстояние на дополнительном двигателе (км).</param>
         /// <returns>Кортеж с расходами (основной, дополнительный).</returns>
+        /// //TODO: RSDN
         public (double basicConsumption, double additionalConsumption) CalculateFuelSeparate(double distanceBasic, double distanceAdd)
         {
             double coeffBasic = Motor.СalculateConsumption();

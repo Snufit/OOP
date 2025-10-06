@@ -299,7 +299,7 @@ namespace ConsoleLoader
 
             Action action =
                 () =>
-                {   //TODO: RSDN +
+                {   
                     switch (transport)
                     {
                         case HybridCar newHybridCar:
