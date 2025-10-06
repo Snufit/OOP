@@ -73,7 +73,6 @@ namespace FuelManagement
             double coeffСonsumptionAdd = AdditionalMotor.СalculateConsumption();
             double massFactor = 1 + (Mass / 1000.0) * 0.1;
 
-            //TODO: rewrite +
             double consumptionBasic = distanceBasic * coeffСonsumptionBasic * massFactor;
             double consumptionAdd = distanceAdd * coeffСonsumptionAdd * massFactor;
 
