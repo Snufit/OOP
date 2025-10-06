@@ -1,9 +1,10 @@
 ﻿using FuelManagement;
+using FuelManagement;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Security.Cryptography.Xml;
 using System.Windows.Forms;
-using FuelManagement;
 
 namespace View
 {
@@ -103,23 +104,21 @@ namespace View
         /// </summary>
         private void CheckedData()
         {
-            BindingList<TransportBase> transportList =
-                new BindingList<TransportBase>();
+            BindingList<TransportBase> transportList;
 
             bool statusCheckBox = _checkBoxFindCar.Checked
                 || _checkBoxFindHybridCar.Checked
                 || _checkBoxFindHelicopter.Checked;
 
             transportList = statusCheckBox
-                ? [.. _filteredTransportList]
-                : [.. _transportList];
+                ? new BindingList<TransportBase>(_filteredTransportList.ToList())
+                : new BindingList<TransportBase>(_transportList.ToList());
 
             if (_checkBoxMass.Checked)
             {
                 if (!string.IsNullOrEmpty(_textBoxMass.Text))
                 {
-                    FilteredMass(transportList,
-                    Convert.ToDouble(_textBoxMass.Text));
+                    FilteredMass(transportList, Convert.ToDouble(_textBoxMass.Text));
                     _filteredTransportList = transportList;
                 }
                 else
@@ -133,8 +132,7 @@ namespace View
             {
                 if (!string.IsNullOrEmpty(_textBoxCapacity.Text))
                 {
-                    FilteredCapacity(transportList,
-                    Convert.ToDouble(_textBoxCapacity.Text));
+                    FilteredCapacity(transportList, Convert.ToDouble(_textBoxCapacity.Text));
                     _filteredTransportList = transportList;
                 }
                 else
