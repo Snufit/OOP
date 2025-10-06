@@ -305,32 +305,35 @@ namespace ConsoleLoader
                     {
                         case HybridCar newHybridCar:
                         {
-                            Console.Write($"\nВведите расстояние в км для двигателя, " +
-                                $"работающего на {newHybridCar.Motor.TypeFuel} " +
+                            Console.Write($"\nВведите общее расстояние в км " +
                                 $"(нажмите Enter): ");
 
-                            double firstDistance = Convert.ToDouble(Console.ReadLine());
-                            ReadPositiveDouble(firstDistance);
+                            double totalDistance = Convert.ToDouble(Console.ReadLine());
+                            ReadPositiveDouble(totalDistance);
 
-                            Console.Write($"\nВведите расстояние в км для двигателя, " +
-                                $"работающего на {newHybridCar.AdditionalMotor.TypeFuel} " +
-                                $"(нажмите Enter): ");
+                            // Используем переопределенный метод с одним параметром
+                            double totalConsumption = newHybridCar.CalculateFuel(totalDistance);
 
-                            double secondDistance = Convert.ToDouble(Console.ReadLine());
-                            ReadPositiveDouble(secondDistance);
+                            // Для раздельного расчета используем дополнительный метод
+                            var separateConsumption = newHybridCar.CalculateFuelSeparate(
+                               totalDistance * 0.5, totalDistance * 0.5);
 
-                            var consumption = newHybridCar.CalculateFuel(firstDistance, secondDistance);
-                            var consumptionBasic = Math.Round(consumption.Item1, 1);
-                            var consumptionAdd = Math.Round(consumption.Item2, 1);
+                            var consumptionBasic = Math.Round(separateConsumption.basicConsumption, 1);
+                            var consumptionAdd = Math.Round(separateConsumption.additionalConsumption, 1);
+                            var totalRounded = Math.Round(totalConsumption, 1);
 
-                            string unitBasic = 
-                            (newHybridCar.Motor.TypeFuel == TypeFuel.Electricity) ? "кВт·ч" : "л";
-                            string unitAdd = 
-                            (newHybridCar.AdditionalMotor.TypeFuel == TypeFuel.Electricity) ? "кВт·ч" : "л";
+                            string unitBasic =
+                                (newHybridCar.Motor.TypeFuel == TypeFuel.Electricity) ? "кВт·ч" : "л";
+                            string unitAdd =
+                                (newHybridCar.AdditionalMotor.TypeFuel == TypeFuel.Electricity) ? "кВт·ч" : "л";
 
-                            Console.Write($"\nРасход топлива для прохождения расстояния " +
-                                $"{firstDistance} км составит {consumptionBasic} {unitBasic}. " +
-                                $"Для {secondDistance} км - {consumptionAdd} {unitAdd}.\n");
+                            Console.Write($"\nОбщий расход топлива для прохождения " +
+                                $"{totalDistance} км составит {totalRounded} л.\n");
+                            Console.Write($"\nРаздельный расход:\n" +
+                                $"- На основном двигателе ({newHybridCar.Motor.TypeFuel}): " +
+                                $"{consumptionBasic} {unitBasic}\n" +
+                                $"- На дополнительном двигателе ({newHybridCar.AdditionalMotor.TypeFuel}): " +
+                                $"{consumptionAdd} {unitAdd}\n");
                         }
                         break;
 
