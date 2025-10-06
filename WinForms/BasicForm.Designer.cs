@@ -98,6 +98,7 @@ namespace View
             this._groupBoxTransport.TabIndex = 0;
             this._groupBoxTransport.TabStop = false;
             this._groupBoxTransport.Text = "Список транспорта";
+            this._groupBoxTransport.Enter += new System.EventHandler(this._groupBoxTransport_Enter);
             // 
             // _gridControlTransport
             // 
@@ -107,7 +108,7 @@ namespace View
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Bisque;
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
@@ -122,7 +123,7 @@ namespace View
             // _buttonAddTransport
             // 
             this._buttonAddTransport.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this._buttonAddTransport.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this._buttonAddTransport.ForeColor = System.Drawing.SystemColors.ControlText;
             this._buttonAddTransport.Location = new System.Drawing.Point(525, 390);
             this._buttonAddTransport.Name = "_buttonAddTransport";
             this._buttonAddTransport.Size = new System.Drawing.Size(100, 30);
@@ -133,7 +134,7 @@ namespace View
             // _buttonRemoveTransport
             // 
             this._buttonRemoveTransport.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this._buttonRemoveTransport.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this._buttonRemoveTransport.ForeColor = System.Drawing.SystemColors.ControlText;
             this._buttonRemoveTransport.Location = new System.Drawing.Point(650, 390);
             this._buttonRemoveTransport.Name = "_buttonRemoveTransport";
             this._buttonRemoveTransport.Size = new System.Drawing.Size(100, 30);
@@ -144,7 +145,7 @@ namespace View
             // _buttonFindTransport
             // 
             this._buttonFindTransport.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this._buttonFindTransport.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this._buttonFindTransport.ForeColor = System.Drawing.SystemColors.ControlText;
             this._buttonFindTransport.Location = new System.Drawing.Point(50, 390);
             this._buttonFindTransport.Name = "_buttonFindTransport";
             this._buttonFindTransport.Size = new System.Drawing.Size(100, 30);
@@ -155,7 +156,7 @@ namespace View
             // _buttonResetTransport
             // 
             this._buttonResetTransport.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this._buttonResetTransport.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this._buttonResetTransport.ForeColor = System.Drawing.SystemColors.ControlText;
             this._buttonResetTransport.Location = new System.Drawing.Point(170, 390);
             this._buttonResetTransport.Name = "_buttonResetTransport";
             this._buttonResetTransport.Size = new System.Drawing.Size(100, 30);
@@ -166,7 +167,7 @@ namespace View
             // _buttonSaveTransport
             // 
             this._buttonSaveTransport.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this._buttonSaveTransport.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this._buttonSaveTransport.ForeColor = System.Drawing.SystemColors.ControlText;
             this._buttonSaveTransport.Location = new System.Drawing.Point(50, 20);
             this._buttonSaveTransport.Name = "_buttonSaveTransport";
             this._buttonSaveTransport.Size = new System.Drawing.Size(100, 30);
@@ -177,7 +178,7 @@ namespace View
             // _buttonOpenTransport
             // 
             this._buttonOpenTransport.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this._buttonOpenTransport.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this._buttonOpenTransport.ForeColor = System.Drawing.SystemColors.ControlText;
             this._buttonOpenTransport.Location = new System.Drawing.Point(170, 20);
             this._buttonOpenTransport.Name = "_buttonOpenTransport";
             this._buttonOpenTransport.Size = new System.Drawing.Size(100, 30);

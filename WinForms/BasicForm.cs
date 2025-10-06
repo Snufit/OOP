@@ -116,20 +116,21 @@ namespace View
         {
             if (_gridControlTransport.SelectedRows.Count > 0)
             {
-                _gridControlTransport.SelectionMode =
-                    DataGridViewSelectionMode.FullRowSelect;
+                var selectedTransports = _gridControlTransport.SelectedRows
+                    .Cast<DataGridViewRow>()
+                    .Where(row => !row.IsNewRow)
+                    .Select(row => row.DataBoundItem as TransportBase)
+                    .Where(transport => transport != null)
+                    .ToList();
 
-                foreach (DataGridViewRow row in
-                    _gridControlTransport.SelectedRows)
+                foreach (var transport in selectedTransports)
                 {
-                    _gridControlTransport.Rows.Remove(row);
+                    _transportList.Remove(transport);
                 }
             }
             else
             {
-                MessageBox.Show("Выберите строку для удаления.",
-                    "Предупреждение", MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                MessageBox.Show("Выберите строку для удаления.");
             }
         }
 
@@ -141,11 +142,11 @@ namespace View
             _gridControlTransport.DataSource = transportList;
         }
 
-        /// <summary>
-        /// Метод нажатия на кнопку "Найти"
-        /// </summary>
-        /// <param name="sender">Событие.</param>
-        /// <param name="e">Данные о событие.</param>
+            /// <summary>
+            /// Метод нажатия на кнопку "Найти"
+            /// </summary>
+            /// <param name="sender">Событие.</param>
+            /// <param name="e">Данные о событие.</param>
         private void FindTransportButtonClick(object sender, EventArgs e)
         {
             if (!_isFindFormOpen)
@@ -258,6 +259,11 @@ namespace View
         }
 
         private void BasicForm_Load_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void _groupBoxTransport_Enter(object sender, EventArgs e)
         {
 
         }
