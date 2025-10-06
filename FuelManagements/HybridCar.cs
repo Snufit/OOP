@@ -70,7 +70,6 @@ namespace FuelManagement
             const double ratio = 0.5;
             double halfDistance = distance * ratio;
 
-            //TODO: to const +
             double coeffBasic = Motor.СalculateConsumption();
             double coeffAdd = AdditionalMotor.СalculateConsumption();
 
@@ -83,7 +82,6 @@ namespace FuelManagement
         /// <param name="distanceBasic">Расстояние на основном двигателе (км).</param>
         /// <param name="distanceAdd">Расстояние на дополнительном двигателе (км).</param>
         /// <returns>Кортеж с расходами (основной, дополнительный).</returns>
-        /// //TODO: RSDN +
         public (double basicConsumption, double additionalConsumption) CalculateFuelSeparate
             (double distanceBasic, double distanceAdd)
         {
