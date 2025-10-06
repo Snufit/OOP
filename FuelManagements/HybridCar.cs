@@ -67,19 +67,14 @@ namespace FuelManagement
         /// <returns>Общий расход топлива (л).</returns>
         public override double CalculateFuel(double distance)
         {
-            //TODO: to const
-            double basicRatio = 0.5;
-            double distanceBasic = distance * basicRatio;
+            const double ratio = 0.5;
+            double halfDistance = distance * ratio;
+
+            //TODO: to const +
             double coeffBasic = Motor.СalculateConsumption();
-            double consumptionBasic = distanceBasic * coeffBasic * Mass;
-
-            //TODO: to const
-            double addRatio = 0.5;
-            double distanceAdd = distance * addRatio;
             double coeffAdd = AdditionalMotor.СalculateConsumption();
-            double consumptionAdd = distanceAdd * coeffAdd * Mass;
 
-            return consumptionBasic + consumptionAdd;
+            return halfDistance * Mass * (coeffBasic + coeffAdd);
         }
 
         /// <summary>
@@ -88,13 +83,14 @@ namespace FuelManagement
         /// <param name="distanceBasic">Расстояние на основном двигателе (км).</param>
         /// <param name="distanceAdd">Расстояние на дополнительном двигателе (км).</param>
         /// <returns>Кортеж с расходами (основной, дополнительный).</returns>
-        /// //TODO: RSDN
-        public (double basicConsumption, double additionalConsumption) CalculateFuelSeparate(double distanceBasic, double distanceAdd)
+        /// //TODO: RSDN +
+        public (double basicConsumption, double additionalConsumption) CalculateFuelSeparate
+            (double distanceBasic, double distanceAdd)
         {
             double coeffBasic = Motor.СalculateConsumption();
-            double coeffAdd = AdditionalMotor.СalculateConsumption();
-
             double consumptionBasic = distanceBasic * coeffBasic * Mass;
+
+            double coeffAdd = AdditionalMotor.СalculateConsumption();
             double consumptionAdd = distanceAdd * coeffAdd * Mass;
 
             return (consumptionBasic, consumptionAdd);
