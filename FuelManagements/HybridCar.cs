@@ -92,7 +92,6 @@ namespace FuelManagement
         /// <returns>Кортеж с расходами (основной, дополнительный).</returns>
         public (double basicConsumption, double additionalConsumption) CalculateFuelSeparate(double distanceBasic, double distanceAdd)
         {
-            // Используем правильное имя метода (с кириллической 'С')
             double coeffBasic = Motor.СalculateConsumption();
             double coeffAdd = AdditionalMotor.СalculateConsumption();
 
