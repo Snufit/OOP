@@ -32,7 +32,7 @@ namespace View
         /// Словарь тип транспорта.
         /// </summary>
         private static readonly Dictionary<string, TypeTransport> _typesTransports =
-            new()
+            new Dictionary<string, TypeTransport>()
         {
             {"Машина", TypeTransport.Car},
             {"Гибридная машина", TypeTransport.HybridCar},
