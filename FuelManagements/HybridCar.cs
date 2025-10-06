@@ -77,6 +77,7 @@ namespace FuelManagement
             double coeffBasic = Motor.СalculateConsumption();
             double coeffAdd = AdditionalMotor.СalculateConsumption();
 
+            //TODO: rewrite +
             double consumptionBasic = distanceBasic * coeffBasic * Mass;
             double consumptionAdd = distanceAdd * coeffAdd * Mass;
 
