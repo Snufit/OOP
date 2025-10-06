@@ -21,6 +21,7 @@ namespace FuelManagement
         /// <summary>
         /// Свойство Масса.
         /// </summary>
+        [Browsable(false)]
         public double Mass
         {
             get => _mass;
