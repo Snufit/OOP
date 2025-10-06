@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Xml.Serialization;
 
-namespace TransportLibrary
+namespace FuelManagement
 {
     /// <summary>
     /// Абстрактный класс Транспорт.
