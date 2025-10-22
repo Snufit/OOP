@@ -24,6 +24,7 @@ namespace View
         public TransportFilterEventArgs(BindingList<TransportBase>
             filterTransportList)
         {
+            //TODO: message?
             if (filterTransportList == null)
             {
                 throw new ArgumentNullException();

@@ -24,6 +24,7 @@ namespace View
         {
             if (transportBase == null)
             {
+                //TODO: message?
                 throw new ArgumentNullException();
             }
 

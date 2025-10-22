@@ -112,6 +112,7 @@ namespace View
 
                 switch (typeTransport)
                 {
+                    //TODO: RSDN
                     case TypeTransport.Car:
                         {
                             Motor motor = new Motor();
@@ -189,6 +190,7 @@ namespace View
 
             switch (typeTransport)
             {
+                //TODO: RSDN
                 case TypeTransport.Car:
                     {
                         _groupBoxDataHybridCar.Visible = false;
@@ -264,6 +266,7 @@ namespace View
             {
                 {
                     TypeTransport.Car,
+                    //TODO: refactor
                     new string[] { "Бензин", "Дизель", "Газ", "Электричество" }
                 },
                 {
@@ -287,6 +290,7 @@ namespace View
         /// <param name="e">Данные о событие.</param>
         private void FillComboBoxHybridFuel(object sender, EventArgs e)
         {
+            //TOOD: refactor
             if (_groupBoxDataHybridCar.Visible == true)
             {
                 string valueComboBoxFuel = (string)_comboBoxFuel.SelectedItem;
@@ -323,8 +327,9 @@ namespace View
         {
             TextBox textBox = (TextBox)sender;
 
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) &&
-                e.KeyChar != ',')
+            if (!char.IsControl(e.KeyChar) 
+                && !char.IsDigit(e.KeyChar) 
+                && e.KeyChar != ',')
             {
                 e.Handled = true;
             }

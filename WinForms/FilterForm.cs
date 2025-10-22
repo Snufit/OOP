@@ -208,7 +208,7 @@ namespace View
                 }
             }
         }
-
+        //TODO: remove
         private void FilterForm_Load(object sender, EventArgs e)
         {
 

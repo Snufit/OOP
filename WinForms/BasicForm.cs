@@ -8,6 +8,7 @@ using FuelManagement;
 
 namespace View
 {
+    //TODO: rename
     /// <summary>
     /// Класс BasicForm.
     /// </summary>
@@ -99,6 +100,7 @@ namespace View
             {
                 _isDataFormOpen = true;
 
+                //TODO: rsdn
                 DataForm DataForm = new DataForm();
                 DataForm.FormClosed += (s, args) => { _isDataFormOpen = false; };
                 DataForm.TransportAdded += AddedTransport;
@@ -142,6 +144,7 @@ namespace View
             _gridControlTransport.DataSource = transportList;
         }
 
+        //TODO: XML
             /// <summary>
             /// Метод нажатия на кнопку "Найти"
             /// </summary>
@@ -248,6 +251,7 @@ namespace View
             }
         }
 
+        //TODO: remove
         private void _gridControlTransport_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
