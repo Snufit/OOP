@@ -6,9 +6,9 @@ using static System.Windows.Forms.DataFormats;
 namespace View
 {
     /// <summary>
-    /// Класс BasicForm.
+    /// Класс MainForm.
     /// </summary>
-    partial class BasicForm
+    partial class MainForm
     {
         /// <summary>
         ///  Необходимая переменная дизайнера.
@@ -98,7 +98,6 @@ namespace View
             this._groupBoxTransport.TabIndex = 0;
             this._groupBoxTransport.TabStop = false;
             this._groupBoxTransport.Text = "Список транспорта";
-            this._groupBoxTransport.Enter += new System.EventHandler(this._groupBoxTransport_Enter);
             // 
             // _gridControlTransport
             // 
@@ -187,7 +186,7 @@ namespace View
             this._buttonOpenTransport.Text = "Открыть";
             this._buttonOpenTransport.UseVisualStyleBackColor = false;
             // 
-            // BasicForm
+            // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
@@ -203,8 +202,7 @@ namespace View
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "BasicForm";
-            this.Load += new System.EventHandler(this.BasicForm_Load_1);
+            this.Name = "MainForm";
             this._groupBoxTransport.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._gridControlTransport)).EndInit();
             this.ResumeLayout(false);

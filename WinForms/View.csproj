@@ -77,11 +77,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicForm.cs">
+    <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BasicForm.Designer.cs">
-      <DependentUpon>BasicForm.cs</DependentUpon>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="DataForm.cs">
       <SubType>Form</SubType>
@@ -99,8 +99,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransportAddedEventArgs.cs" />
     <Compile Include="TransportFilterEventArgs.cs" />
-    <EmbeddedResource Include="BasicForm.resx">
-      <DependentUpon>BasicForm.cs</DependentUpon>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataForm.resx">
       <DependentUpon>DataForm.cs</DependentUpon>

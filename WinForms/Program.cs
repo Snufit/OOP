@@ -17,7 +17,7 @@ namespace View
         {
             Application.EnableVisualStyles(); // включает визуальные стили
             Application.SetCompatibleTextRenderingDefault(false); // классическая отрисовка текста
-            Application.Run(new BasicForm()); // главная форма
+            Application.Run(new MainForm()); // главная форма
         }
     }
 }

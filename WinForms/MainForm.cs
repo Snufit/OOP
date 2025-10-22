@@ -8,11 +8,11 @@ using FuelManagement;
 
 namespace View
 {
-    //TODO: rename
+    //TODO: rename +
     /// <summary>
-    /// Класс BasicForm.
+    /// Класс MainForm.
     /// </summary>
-    public partial class BasicForm : System.Windows.Forms.Form
+    public partial class MainForm : System.Windows.Forms.Form
     {
         /// <summary>
         /// Лист для заполнения таблицы.
@@ -42,9 +42,9 @@ namespace View
             new XmlSerializer(typeof(BindingList<TransportBase>));
 
         /// <summary>
-        /// Конструктор BasicForm.
+        /// Конструктор MainForm.
         /// </summary>
-        public BasicForm()
+        public MainForm()
         {
             InitializeComponent();
 
@@ -250,26 +250,6 @@ namespace View
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-
-        //TODO: remove
-        private void _gridControlTransport_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void BasicForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void BasicForm_Load_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void _groupBoxTransport_Enter(object sender, EventArgs e)
-        {
-
-        }
+        //TODO: remove +
     }
 }

@@ -78,9 +78,7 @@ namespace View
 
             _buttonCancel.Click += new EventHandler(CancelButtonClick);
 
-#if DEBUG
             _buttonRandom.Click += new EventHandler(RandomButtonClick);
-#endif
 
             _textBoxCapacity.KeyPress += new
                 KeyPressEventHandler(TextBoxKeyPress);
@@ -93,7 +91,6 @@ namespace View
 
             _textBoxBladeLength.KeyPress += new
                 KeyPressEventHandler(TextBoxKeyPress);
-
         }
 
         /// <summary>
@@ -112,58 +109,58 @@ namespace View
 
                 switch (typeTransport)
                 {
-                    //TODO: RSDN
+                    //TODO: RSDN +
                     case TypeTransport.Car:
-                        {
-                            Motor motor = new Motor();
-                            motor.TypeFuel = _typesFuel[(string)_comboBoxFuel.SelectedItem];
-                            motor.Capacity = Convert.ToDouble(_textBoxCapacity.Text);
-                            double mass = Convert.ToDouble(_textBoxMass.Text);
+                    {
+                        Motor motor = new Motor();
+                        motor.TypeFuel = _typesFuel[(string)_comboBoxFuel.SelectedItem];
+                        motor.Capacity = Convert.ToDouble(_textBoxCapacity.Text);
+                        double mass = Convert.ToDouble(_textBoxMass.Text);
 
-                            transport = new Car()
-                            {
-                                Motor = motor,
-                                Mass = mass
-                            };
-                            break;
-                        }
+                        transport = new Car()
+                        {
+                            Motor = motor,
+                            Mass = mass
+                        };
+                        break;
+                    }
 
                     case TypeTransport.HybridCar:
+                    {
+                        Motor motor = new Motor();
+                        motor.TypeFuel = _typesFuel[(string)_comboBoxFuel.SelectedItem];
+                        motor.Capacity = Convert.ToDouble(_textBoxCapacity.Text);
+
+                        Motor additionalMotor = new Motor();
+                        additionalMotor.TypeFuel = _typesFuel[(string)_comboBoxHybridFuel.SelectedItem];
+                        additionalMotor.Capacity = Convert.ToDouble(_textBoxHybridCapacity.Text);
+
+                        double mass = Convert.ToDouble(_textBoxMass.Text);
+
+                        transport = new HybridCar()
                         {
-                            Motor motor = new Motor();
-                            motor.TypeFuel = _typesFuel[(string)_comboBoxFuel.SelectedItem];
-                            motor.Capacity = Convert.ToDouble(_textBoxCapacity.Text);
-
-                            Motor additionalMotor = new Motor();
-                            additionalMotor.TypeFuel = _typesFuel[(string)_comboBoxHybridFuel.SelectedItem];
-                            additionalMotor.Capacity = Convert.ToDouble(_textBoxHybridCapacity.Text);
-
-                            double mass = Convert.ToDouble(_textBoxMass.Text);
-
-                            transport = new HybridCar()
-                            {
-                                Motor = motor,
-                                AdditionalMotor = additionalMotor,
-                                Mass = mass,
-                            };
-                            break;
-                        }
+                            Motor = motor,
+                            AdditionalMotor = additionalMotor,
+                            Mass = mass,
+                        };
+                        break;
+                    }
                     case TypeTransport.Helicopter:
-                        {
-                            Motor motor = new Motor();
-                            motor.TypeFuel = _typesFuel[(string)_comboBoxFuel.SelectedItem];
-                            motor.Capacity = Convert.ToDouble(_textBoxCapacity.Text);
-                            double mass = Convert.ToDouble(_textBoxMass.Text);
-                            double bladeLength = Convert.ToDouble(_textBoxBladeLength.Text);
+                    {
+                        Motor motor = new Motor();
+                        motor.TypeFuel = _typesFuel[(string)_comboBoxFuel.SelectedItem];
+                        motor.Capacity = Convert.ToDouble(_textBoxCapacity.Text);
+                        double mass = Convert.ToDouble(_textBoxMass.Text);
+                        double bladeLength = Convert.ToDouble(_textBoxBladeLength.Text);
 
-                            transport = new Helicopter()
-                            {
-                                Motor = motor,
-                                Mass = mass,
-                                BladeLength = bladeLength
-                            };
-                            break;
-                        }
+                         transport = new Helicopter()
+                         {
+                            Motor = motor,
+                            Mass = mass,
+                            BladeLength = bladeLength
+                         };
+                         break;
+                    }
                 }
 
                 TransportAdded?.Invoke(this,
@@ -190,28 +187,27 @@ namespace View
 
             switch (typeTransport)
             {
-                //TODO: RSDN
+                //TODO: RSDN +
                 case TypeTransport.Car:
-                    {
-                        _groupBoxDataHybridCar.Visible = false;
-                        _groupBoxDataHelicopter.Visible = false;
-                        break;
-                    }
+                {
+                    _groupBoxDataHybridCar.Visible = false;
+                    _groupBoxDataHelicopter.Visible = false;
+                    break;
+                }
 
                 case TypeTransport.HybridCar:
-                    {
-                        _groupBoxDataHybridCar.Visible = true;
-                        _groupBoxDataHelicopter.Visible = false;
-                        break;
-                    }
-
+                {
+                    _groupBoxDataHybridCar.Visible = true;
+                    _groupBoxDataHelicopter.Visible = false;
+                    break;
+                }
 
                 case TypeTransport.Helicopter:
-                    {
-                        _groupBoxDataHybridCar.Visible = false;
-                        _groupBoxDataHelicopter.Visible = true;
-                        break;
-                    }
+                {
+                    _groupBoxDataHybridCar.Visible = false;
+                    _groupBoxDataHelicopter.Visible = true;
+                    break;
+                }
             }
         }
 
