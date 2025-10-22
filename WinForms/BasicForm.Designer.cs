@@ -105,8 +105,6 @@ namespace View
             this._gridControlTransport.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this._gridControlTransport.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this._gridControlTransport.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-
-            // Стиль для заголовков колонок
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
@@ -117,11 +115,8 @@ namespace View
             this._gridControlTransport.Dock = System.Windows.Forms.DockStyle.Fill;
             this._gridControlTransport.Location = new System.Drawing.Point(3, 16);
             this._gridControlTransport.Name = "_gridControlTransport";
-
-            // Настройка высоты строк
             this._gridControlTransport.RowTemplate.Height = 60; // Увеличена высота строк
             this._gridControlTransport.RowTemplate.MinimumHeight = 40; // Минимальная высота
-
             this._gridControlTransport.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this._gridControlTransport.Size = new System.Drawing.Size(694, 301);
             this._gridControlTransport.TabIndex = 0;
