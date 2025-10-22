@@ -113,15 +113,14 @@ namespace View
             dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True; // ОШИБКААААААААААААААААААААААААААА
             this._gridControlTransport.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this._gridControlTransport.Dock = System.Windows.Forms.DockStyle.Fill;
             this._gridControlTransport.Location = new System.Drawing.Point(3, 16);
             this._gridControlTransport.Name = "_gridControlTransport";
 
             // Настройка высоты строк
-            this._gridControlTransport.RowTemplate.Height = 60; // ✅ Увеличена высота строк
-            this._gridControlTransport.RowTemplate.MinimumHeight = 40; // ✅ Минимальная высота
+            this._gridControlTransport.RowTemplate.Height = 60; // Увеличена высота строк
+            this._gridControlTransport.RowTemplate.MinimumHeight = 40; // Минимальная высота
 
             this._gridControlTransport.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this._gridControlTransport.Size = new System.Drawing.Size(694, 301);
