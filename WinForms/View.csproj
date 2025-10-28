@@ -77,7 +77,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileName.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
