@@ -24,10 +24,12 @@ namespace View
         public TransportFilterEventArgs(BindingList<TransportBase>
             filterTransportList)
         {
-            //TODO: message?
+            //TODO: message? +
             if (filterTransportList == null)
             {
-                throw new ArgumentNullException();
+                throw new ArgumentNullException(
+                    nameof(filterTransportList),
+                    "Отфильтрованный список транспорта не может быть null");
             }
 
             FilteredTransportList = filterTransportList;

@@ -209,7 +209,6 @@ namespace View
             MinimizeBox = false;
             Name = "FilterForm";
             Text = "Найти";
-            Load += FilterForm_Load;
             _groupBoxFilterType.ResumeLayout(false);
             _groupBoxFilterType.PerformLayout();
             _groupBoxFilterData.ResumeLayout(false);

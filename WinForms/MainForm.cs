@@ -99,10 +99,10 @@ namespace View
             if (!_isDataFormOpen)
             {
                 _isDataFormOpen = true;
-
-                //TODO: rsdn
+                //TODO: rsdn +
                 DataForm DataForm = new DataForm();
-                DataForm.FormClosed += (s, args) => { _isDataFormOpen = false; };
+                DataForm.FormClosed += (s, args) 
+                    => { _isDataFormOpen = false; };
                 DataForm.TransportAdded += AddedTransport;
                 DataForm.TransportCancel += CancelTransport;
                 DataForm.Show();
@@ -144,12 +144,12 @@ namespace View
             _gridControlTransport.DataSource = transportList;
         }
 
-        //TODO: XML
-            /// <summary>
-            /// Метод нажатия на кнопку "Найти"
-            /// </summary>
-            /// <param name="sender">Событие.</param>
-            /// <param name="e">Данные о событие.</param>
+        //TODO: XML +
+        /// <summary>
+        /// Метод нажатия на кнопку "Найти"
+        /// </summary>
+        /// <param name="sender">Событие.</param>
+        /// <param name="e">Данные о событие.</param>
         private void FindTransportButtonClick(object sender, EventArgs e)
         {
             if (!_isFindFormOpen)
@@ -157,7 +157,8 @@ namespace View
                 _isFindFormOpen = true;
 
                 FilterForm findForm = new FilterForm(_transportList);
-                findForm.FormClosed += (s, args) => { _isFindFormOpen = false; };
+                findForm.FormClosed += (s, args) 
+                    => { _isFindFormOpen = false; };
                 findForm.TransportFiltered += FilteredTransport;
                 findForm.Show();
             }

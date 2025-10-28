@@ -31,26 +31,32 @@ namespace View
         /// <summary>
         /// Словарь тип транспорта.
         /// </summary>
-        private static readonly Dictionary<string, TypeTransport> _typesTransports =
-            new Dictionary<string, TypeTransport>()
+        private static readonly Dictionary<TypeTransport, string[]> _transportFuelTypes =
+            new Dictionary<TypeTransport, string[]>()
         {
-            {"Машина", TypeTransport.Car},
-            {"Гибридная машина", TypeTransport.HybridCar},
-            {"Вертолет", TypeTransport.Helicopter},
+            {
+                TypeTransport.Car,
+                new string[] { "Бензин", "Дизель", "Газ", "Электричество" }
+            },
+            {
+                TypeTransport.HybridCar,
+                 new string[] { "Бензин", "Дизель", "Газ", "Электричество" }
+            },
+            {
+                TypeTransport.Helicopter,
+                new string[] { "Авиационный бензин", "Авиационный керосин" }
+            },
         };
 
         /// <summary>
         /// Словарь тип топлива.
         /// </summary>
-        private static readonly Dictionary<string, TypeFuel> _typesFuel =
-            new Dictionary<string, TypeFuel>()
+        private static readonly Dictionary<TypeTransport, (bool HybridVisible, bool HelicopterVisible)> _groupBoxVisibility =
+            new Dictionary<TypeTransport, (bool, bool)>()
         {
-            {"Бензин", TypeFuel.Petrol},
-            {"Дизель", TypeFuel.Diesel},
-            {"Электричество", TypeFuel.Electricity},
-            {"Газ", TypeFuel.Gas},
-            {"Авиационный керосин", TypeFuel.AviationKerosene},
-            {"Авиационный бензин", TypeFuel.AviationGasoline},
+            { TypeTransport.Car, (false, false) },
+            { TypeTransport.HybridCar, (true, false) },
+            { TypeTransport.Helicopter, (false, true) }
         };
 
         /// <summary>
@@ -245,7 +251,7 @@ namespace View
         {
             FillComboBoxFuel();
         }
-
+        //TODO: refactor
         /// <summary>
         /// Заполнение  ComboBoxFuel массивом данных
         /// в соответствии с выбранным типом транспорта.
@@ -257,21 +263,23 @@ namespace View
             TypeTransport typeTransport =
                 _typesTransports[_comboBoxTransport.Text];
 
-            Dictionary<TypeTransport, string[]> fuelTypes =
-                new Dictionary<TypeTransport, string[]>()
+            string[] namesTransports = _typesFuel.Keys.ToArray();
+
+            Dictionary<TypeTransport, string[]> fuelTypes = new()
             {
                 {
                     TypeTransport.Car,
-                    //TODO: refactor
-                    new string[] { "Бензин", "Дизель", "Газ", "Электричество" }
+                    [namesTransports[0], namesTransports[1],
+                     namesTransports[2], namesTransports[3]]
                 },
                 {
                     TypeTransport.HybridCar,
-                    new string[] { "Бензин", "Дизель", "Газ", "Электричество" }
+                    [namesTransports[0], namesTransports[1],
+                     namesTransports[2], namesTransports[3]]
                 },
                 {
                     TypeTransport.Helicopter,
-                    new string[] { "Авиационный бензин", "Реактивное топливо" }
+                    [namesTransports[4], namesTransports[5]]
                 },
             };
 

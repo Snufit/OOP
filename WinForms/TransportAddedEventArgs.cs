@@ -1,5 +1,7 @@
-﻿using System;
-using FuelManagement;
+﻿using FuelManagement;
+using System;
+using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace View
 {
@@ -24,8 +26,9 @@ namespace View
         {
             if (transportBase == null)
             {
-                //TODO: message?
-                throw new ArgumentNullException();
+                //TODO: message? +
+                throw new ArgumentNullException(nameof(transportBase),
+                    "Объект транспорта не может быть null");
             }
 
             TransportBase = transportBase;
