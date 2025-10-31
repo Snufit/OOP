@@ -26,7 +26,6 @@ namespace View
         {
             if (transportBase == null)
             {
-                //TODO: message? +
                 throw new ArgumentNullException(nameof(transportBase),
                     "Объект транспорта не может быть null");
             }

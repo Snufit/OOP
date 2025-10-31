@@ -208,6 +208,5 @@ namespace View
                 }
             }
         }
-        //TODO: remove +
     }
 }

@@ -8,7 +8,6 @@ using FuelManagement;
 
 namespace View
 {
-    //TODO: rename +
     /// <summary>
     /// Класс MainForm.
     /// </summary>
@@ -99,7 +98,7 @@ namespace View
             if (!_isDataFormOpen)
             {
                 _isDataFormOpen = true;
-                //TODO: rsdn +
+                //TODO: rsdn 
                 DataForm DataForm = new DataForm();
                 DataForm.FormClosed += (s, args) 
                     => { _isDataFormOpen = false; };
@@ -144,7 +143,6 @@ namespace View
             _gridControlTransport.DataSource = transportList;
         }
 
-        //TODO: XML +
         /// <summary>
         /// Метод нажатия на кнопку "Найти"
         /// </summary>
@@ -251,6 +249,5 @@ namespace View
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        //TODO: remove +
     }
 }

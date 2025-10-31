@@ -135,7 +135,6 @@ namespace View
         {
             switch (typeTransport)
             {
-                    //TODO: RSDN +
                 case TypeTransport.Car:
                     return CreateCar();
 
@@ -273,7 +272,7 @@ namespace View
 
             switch (typeTransport)
             {
-                //TODO: RSDN +
+                //TODO: RSDN
                 case TypeTransport.Car:
                     _groupBoxDataHybridCar.Visible = false;
                     _groupBoxDataHelicopter.Visible = false;
@@ -338,7 +337,6 @@ namespace View
             FillComboBoxFuel();
         }
 
-        //TODO: refactor +
         /// <summary>
         /// Заполнение ComboBoxFuel массивом данных
         /// в соответствии с выбранным типом транспорта.
