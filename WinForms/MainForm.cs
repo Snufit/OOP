@@ -114,58 +114,67 @@ namespace View
         /// <param name="e">Данные о событие.</param>
         private void RemoveTransportButtonClick(object sender, EventArgs e)
         {
-            UpdateFilteredList();
-            if (_gridControlTransport.SelectedRows.Count > 0)
+            if (_gridControlTransport.SelectedRows.Count == 0)
             {
-                var selectedTransports = _gridControlTransport.SelectedRows
-                    .Cast<DataGridViewRow>()
-                    .Where(row => !row.IsNewRow)
-                    .Select(row => row.DataBoundItem as TransportBase)
-                    .Where(transport => transport != null)
-                    .ToList();
+                MessageBox.Show("Выберите строки для удаления.", "Информация",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-                if (!selectedTransports.Any())
-                {
-                    MessageBox.Show("Выберите строки для удаления.", "Информация",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
+            var selectedTransports = _gridControlTransport.SelectedRows
+                .Cast<DataGridViewRow>()
+                .Where(row => !row.IsNewRow && row.DataBoundItem is TransportBase)
+                .Select(row => (TransportBase)row.DataBoundItem)
+                .ToList();
 
-                // Удаляем из ОСНОВНОГО списка, а не из отфильтрованного
+            if (!selectedTransports.Any()) return;
+
+            var result = MessageBox.Show(
+                $"Вы уверены, что хотите удалить {selectedTransports.Count} элементов?",
+                "Подтверждение удаления",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                // Удаляем из основного списка
                 foreach (var transport in selectedTransports)
                 {
                     _transportList.Remove(transport);
                 }
 
-                // Обновляем отображение
-                if (_filteredTransportList != null && _filteredTransportList.Any())
+                // АВТОМАТИЧЕСКИ обновляем отфильтрованный список
+                if (_filteredTransportList != null)
                 {
-                    // Если активен фильтр, обновляем отфильтрованный список
-                    FillingDataGridView(_filteredTransportList);
+                    // Создаем новый отфильтрованный список без удаленных элементов
+                    var updatedFilteredList = _filteredTransportList
+                        .Where(item => _transportList.Contains(item))
+                        .ToList();
+
+                    _filteredTransportList = new BindingList<TransportBase>(updatedFilteredList);
                 }
-            }
-            else
-            {
-                MessageBox.Show("Выберите строки для удаления.", "Информация",
+
+                // Обновляем отображение
+                RefreshDataGridView();
+
+                MessageBox.Show("Элементы успешно удалены.", "Успех",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         /// <summary>
-        /// Обновляет отфильтрованный список после изменений в основном списке.
+        /// Обновляет отображение DataGridView в зависимости от текущего состояния.
         /// </summary>
-        private void UpdateFilteredList()
+        private void RefreshDataGridView()
         {
-            if (_filteredTransportList != null)
+            if (_filteredTransportList != null && _filteredTransportList.Count > 0)
             {
-                // Оставляем в отфильтрованном списке только те элементы, 
-                // которые остались в основном списке
-                var itemsToKeep = _filteredTransportList
-                    .Where(item => _transportList.Contains(item))
-                    .ToList();
-
-                _filteredTransportList = new BindingList<TransportBase>(itemsToKeep);
                 FillingDataGridView(_filteredTransportList);
+            }
+            else
+            {
+                FillingDataGridView(_transportList);
+                _filteredTransportList = null; // Сбрасываем фильтр
             }
         }
 
