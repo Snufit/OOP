@@ -58,10 +58,12 @@ namespace View
         {
             {
                 TypeTransport.Car,
+                //TODO: RSDN
                 new TypeFuel[] { TypeFuel.Petrol, TypeFuel.Diesel, TypeFuel.Gas, TypeFuel.Electricity }
             },
             {
                 TypeTransport.HybridCar,
+                //TODO: RSDN
                 new TypeFuel[] { TypeFuel.Petrol, TypeFuel.Diesel, TypeFuel.Gas, TypeFuel.Electricity }
             },
             {
@@ -317,7 +319,7 @@ namespace View
             comboBox.SelectedItem = dataSource.GetValue(0);
         }
 
-        //TODO: remove +
+        //TODO: RSDN
         /// <summary>
         /// Заполнение ComboBoxFuel массивом данных
         /// в соответствии с выбранным типом транспорта.
