@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-
-
 namespace View
 {
     /// <summary>
@@ -31,8 +29,32 @@ namespace View
         /// <summary>
         /// Словарь тип транспорта.
         /// </summary>
+        private static readonly Dictionary<string, TypeTransport> _typesTransports =
+            new Dictionary<string, TypeTransport>
+        {
+            {"Машина", TypeTransport.Car},
+            {"Гибридная машина", TypeTransport.HybridCar},
+            {"Вертолет", TypeTransport.Helicopter},
+        };
+
+        /// <summary>
+        /// Словарь тип топлива.
+        /// </summary>
+        private static readonly Dictionary<string, TypeFuel> _typesFuel = new Dictionary<string, TypeFuel>
+        {
+            {"Бензин", TypeFuel.Petrol},
+            {"Дизель", TypeFuel.Diesel},
+            {"Электричество", TypeFuel.Electricity},
+            {"Газ", TypeFuel.Gas},
+            {"Авиационный керосин", TypeFuel.AviationKerosene},
+            {"Авиационный бензин", TypeFuel.AviationGasoline},
+        };
+
+        /// <summary>
+        /// Словарь доступных типов топлива для каждого транспорта.
+        /// </summary>
         private static readonly Dictionary<TypeTransport, string[]> _transportFuelTypes =
-            new Dictionary<TypeTransport, string[]>()
+            new Dictionary<TypeTransport, string[]>
         {
             {
                 TypeTransport.Car,
@@ -40,23 +62,12 @@ namespace View
             },
             {
                 TypeTransport.HybridCar,
-                 new string[] { "Бензин", "Дизель", "Газ", "Электричество" }
+                new string[] { "Бензин", "Дизель", "Газ", "Электричество" }
             },
             {
                 TypeTransport.Helicopter,
                 new string[] { "Авиационный бензин", "Авиационный керосин" }
             },
-        };
-
-        /// <summary>
-        /// Словарь тип топлива.
-        /// </summary>
-        private static readonly Dictionary<TypeTransport, (bool HybridVisible, bool HelicopterVisible)> _groupBoxVisibility =
-            new Dictionary<TypeTransport, (bool, bool)>()
-        {
-            { TypeTransport.Car, (false, false) },
-            { TypeTransport.HybridCar, (true, false) },
-            { TypeTransport.Helicopter, (false, true) }
         };
 
         /// <summary>
@@ -66,37 +77,23 @@ namespace View
         {
             InitializeComponent();
 
-            FillComboBox(_typesTransports.Keys.ToArray(),
-                _comboBoxTransport);
-
+            FillComboBox(_typesTransports.Keys.ToArray(), _comboBoxTransport);
             FillComboBoxFuel();
 
-            _comboBoxTransport.SelectedIndexChanged += new
-                EventHandler(AddGroupBoxData);
+            _comboBoxTransport.SelectedIndexChanged += AddGroupBoxData;
+            _comboBoxTransport.SelectedIndexChanged += comboBoxTransportFillComboBoxFuel;
+            _comboBoxFuel.SelectedIndexChanged += FillComboBoxHybridFuel;
+            _buttonAgree.Click += AgreeButtonClick;
+            _buttonCancel.Click += CancelButtonClick;
 
-            _comboBoxTransport.SelectedIndexChanged += new
-                EventHandler(comboBoxTransportFillComboBoxFuel);
+#if DEBUG
+            _buttonRandom.Click += RandomButtonClick;
+#endif
 
-            _comboBoxFuel.SelectedIndexChanged += new
-                EventHandler(FillComboBoxHybridFuel);
-
-            _buttonAgree.Click += new EventHandler(AgreeButtonClick);
-
-            _buttonCancel.Click += new EventHandler(CancelButtonClick);
-
-            _buttonRandom.Click += new EventHandler(RandomButtonClick);
-
-            _textBoxCapacity.KeyPress += new
-                KeyPressEventHandler(TextBoxKeyPress);
-
-            _textBoxMass.KeyPress += new
-                KeyPressEventHandler(TextBoxKeyPress);
-
-            _textBoxHybridCapacity.KeyPress += new
-                KeyPressEventHandler(TextBoxKeyPress);
-
-            _textBoxBladeLength.KeyPress += new
-                KeyPressEventHandler(TextBoxKeyPress);
+            _textBoxCapacity.KeyPress += TextBoxKeyPress;
+            _textBoxMass.KeyPress += TextBoxKeyPress;
+            _textBoxHybridCapacity.KeyPress += TextBoxKeyPress;
+            _textBoxBladeLength.KeyPress += TextBoxKeyPress;
         }
 
         /// <summary>
@@ -106,79 +103,163 @@ namespace View
         /// <param name="e">Данные о событие.</param>
         private void AgreeButtonClick(object sender, EventArgs e)
         {
+            if (!ValidateInputs())
+            {
+                return;
+            }
+
             try
             {
-                TypeTransport typeTransport =
-                    _typesTransports[_comboBoxTransport.Text];
+                TypeTransport typeTransport = _typesTransports[_comboBoxTransport.Text];
+                TransportBase transport = CreateTransport(typeTransport);
 
-                TransportBase transport = null;
-
-                switch (typeTransport)
+                if (transport != null)
                 {
-                    //TODO: RSDN +
-                    case TypeTransport.Car:
-                    {
-                        Motor motor = new Motor();
-                        motor.TypeFuel = _typesFuel[(string)_comboBoxFuel.SelectedItem];
-                        motor.Capacity = Convert.ToDouble(_textBoxCapacity.Text);
-                        double mass = Convert.ToDouble(_textBoxMass.Text);
-
-                        transport = new Car()
-                        {
-                            Motor = motor,
-                            Mass = mass
-                        };
-                        break;
-                    }
-
-                    case TypeTransport.HybridCar:
-                    {
-                        Motor motor = new Motor();
-                        motor.TypeFuel = _typesFuel[(string)_comboBoxFuel.SelectedItem];
-                        motor.Capacity = Convert.ToDouble(_textBoxCapacity.Text);
-
-                        Motor additionalMotor = new Motor();
-                        additionalMotor.TypeFuel = _typesFuel[(string)_comboBoxHybridFuel.SelectedItem];
-                        additionalMotor.Capacity = Convert.ToDouble(_textBoxHybridCapacity.Text);
-
-                        double mass = Convert.ToDouble(_textBoxMass.Text);
-
-                        transport = new HybridCar()
-                        {
-                            Motor = motor,
-                            AdditionalMotor = additionalMotor,
-                            Mass = mass,
-                        };
-                        break;
-                    }
-                    case TypeTransport.Helicopter:
-                    {
-                        Motor motor = new Motor();
-                        motor.TypeFuel = _typesFuel[(string)_comboBoxFuel.SelectedItem];
-                        motor.Capacity = Convert.ToDouble(_textBoxCapacity.Text);
-                        double mass = Convert.ToDouble(_textBoxMass.Text);
-                        double bladeLength = Convert.ToDouble(_textBoxBladeLength.Text);
-
-                         transport = new Helicopter()
-                         {
-                            Motor = motor,
-                            Mass = mass,
-                            BladeLength = bladeLength
-                         };
-                         break;
-                    }
+                    TransportAdded?.Invoke(this, new TransportAddedEventArgs(transport));
+                    _lastTransport = transport;
                 }
-
-                TransportAdded?.Invoke(this,
-                    new TransportAddedEventArgs(transport));
-
-                _lastTransport = transport;
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Введите данные.", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"Ошибка при создании транспорта: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        /// <summary>
+        /// Создает транспорт указанного типа.
+        /// </summary>
+        /// <param name="typeTransport">Тип транспорта.</param>
+        /// <returns>Созданный транспорт.</returns>
+        private TransportBase CreateTransport(TypeTransport typeTransport)
+        {
+            switch (typeTransport)
+            {
+                    //TODO: RSDN +
+                case TypeTransport.Car:
+                    return CreateCar();
+
+                case TypeTransport.HybridCar:
+                    return CreateHybridCar();
+
+                case TypeTransport.Helicopter:
+                    return CreateHelicopter();
+
+                default:
+                    throw new ArgumentException("Неизвестный тип транспорта");
+            }
+        }
+
+        /// <summary>
+        /// Создает автомобиль.
+        /// </summary>
+        /// <returns>Созданный автомобиль.</returns>
+        private Car CreateCar()
+        {
+            Motor motor = new Motor();
+            motor.TypeFuel = _typesFuel[(string)_comboBoxFuel.SelectedItem];
+            motor.Capacity = Convert.ToDouble(_textBoxCapacity.Text);
+            double mass = Convert.ToDouble(_textBoxMass.Text);
+
+            return new Car()
+            {
+                Motor = motor,
+                Mass = mass
+            };
+        }
+
+        /// <summary>
+        /// Создает гибридный автомобиль.
+        /// </summary>
+        /// <returns>Созданный гибридный автомобиль.</returns>
+        private HybridCar CreateHybridCar()
+        {
+            Motor motor = new Motor();
+            motor.TypeFuel = _typesFuel[(string)_comboBoxFuel.SelectedItem];
+            motor.Capacity = Convert.ToDouble(_textBoxCapacity.Text);
+
+            Motor additionalMotor = new Motor();
+            additionalMotor.TypeFuel = _typesFuel[(string)_comboBoxHybridFuel.SelectedItem];
+            additionalMotor.Capacity = Convert.ToDouble(_textBoxHybridCapacity.Text);
+
+            double mass = Convert.ToDouble(_textBoxMass.Text);
+
+            return new HybridCar()
+            {
+                Motor = motor,
+                AdditionalMotor = additionalMotor,
+                Mass = mass,
+            };
+        }
+
+        /// <summary>
+        /// Создает вертолет.
+        /// </summary>
+        /// <returns>Созданный вертолет.</returns>
+        private Helicopter CreateHelicopter()
+        {
+            Motor motor = new Motor();
+            motor.TypeFuel = _typesFuel[(string)_comboBoxFuel.SelectedItem];
+            motor.Capacity = Convert.ToDouble(_textBoxCapacity.Text);
+            double mass = Convert.ToDouble(_textBoxMass.Text);
+            double bladeLength = Convert.ToDouble(_textBoxBladeLength.Text);
+
+            return new Helicopter()
+            {
+                Motor = motor,
+                Mass = mass,
+                BladeLength = bladeLength
+            };
+        }
+
+        /// <summary>
+        /// Проверяет корректность введенных данных.
+        /// </summary>
+        /// <returns>True если данные корректны, иначе False.</returns>
+        private bool ValidateInputs()
+        {
+            if (string.IsNullOrWhiteSpace(_textBoxMass.Text) ||
+                string.IsNullOrWhiteSpace(_textBoxCapacity.Text))
+            {
+                MessageBox.Show("Заполните все обязательные поля.", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Проверка гибридной машины
+            if (_groupBoxDataHybridCar.Visible &&
+                string.IsNullOrWhiteSpace(_textBoxHybridCapacity.Text))
+            {
+                MessageBox.Show("Заполните мощность второго двигателя.", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Проверка вертолета
+            if (_groupBoxDataHelicopter.Visible &&
+                string.IsNullOrWhiteSpace(_textBoxBladeLength.Text))
+            {
+                MessageBox.Show("Заполните длину лопастей.", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // Проверка числовых значений
+            if (!double.TryParse(_textBoxMass.Text, out double mass) || mass <= 0)
+            {
+                MessageBox.Show("Введите корректную массу.", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (!double.TryParse(_textBoxCapacity.Text, out double capacity) || capacity <= 0)
+            {
+                MessageBox.Show("Введите корректную мощность.", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -188,32 +269,25 @@ namespace View
         /// <param name="e">Данные о событие.</param>
         private void AddGroupBoxData(object sender, EventArgs e)
         {
-            TypeTransport typeTransport =
-                    _typesTransports[_comboBoxTransport.Text];
+            TypeTransport typeTransport = _typesTransports[_comboBoxTransport.Text];
 
             switch (typeTransport)
             {
                 //TODO: RSDN +
                 case TypeTransport.Car:
-                {
                     _groupBoxDataHybridCar.Visible = false;
                     _groupBoxDataHelicopter.Visible = false;
                     break;
-                }
 
                 case TypeTransport.HybridCar:
-                {
                     _groupBoxDataHybridCar.Visible = true;
                     _groupBoxDataHelicopter.Visible = false;
                     break;
-                }
 
                 case TypeTransport.Helicopter:
-                {
                     _groupBoxDataHybridCar.Visible = false;
                     _groupBoxDataHelicopter.Visible = true;
                     break;
-                }
             }
         }
 
@@ -251,39 +325,20 @@ namespace View
         {
             FillComboBoxFuel();
         }
+
         //TODO: refactor
         /// <summary>
-        /// Заполнение  ComboBoxFuel массивом данных
+        /// Заполнение ComboBoxFuel массивом данных
         /// в соответствии с выбранным типом транспорта.
         /// </summary>
         private void FillComboBoxFuel()
         {
-            object key = _comboBoxTransport.SelectedItem;
+            TypeTransport typeTransport = _typesTransports[_comboBoxTransport.Text];
 
-            TypeTransport typeTransport =
-                _typesTransports[_comboBoxTransport.Text];
-
-            string[] namesTransports = _typesFuel.Keys.ToArray();
-
-            Dictionary<TypeTransport, string[]> fuelTypes = new()
+            if (_transportFuelTypes.TryGetValue(typeTransport, out string[] availableFuels))
             {
-                {
-                    TypeTransport.Car,
-                    [namesTransports[0], namesTransports[1],
-                     namesTransports[2], namesTransports[3]]
-                },
-                {
-                    TypeTransport.HybridCar,
-                    [namesTransports[0], namesTransports[1],
-                     namesTransports[2], namesTransports[3]]
-                },
-                {
-                    TypeTransport.Helicopter,
-                    [namesTransports[4], namesTransports[5]]
-                },
-            };
-
-            FillComboBox(fuelTypes[typeTransport], _comboBoxFuel);
+                FillComboBox(availableFuels, _comboBoxFuel);
+            }
         }
 
         /// <summary>
@@ -292,33 +347,18 @@ namespace View
         /// </summary>
         /// <param name="sender">Событие.</param>
         /// <param name="e">Данные о событие.</param>
+        /// TOOD: refactor
         private void FillComboBoxHybridFuel(object sender, EventArgs e)
         {
-            //TOOD: refactor
-            if (_groupBoxDataHybridCar.Visible == true)
+            if (_groupBoxDataHybridCar.Visible)
             {
-                string valueComboBoxFuel = (string)_comboBoxFuel.SelectedItem;
+                string selectedFuel = (string)_comboBoxFuel.SelectedItem;
+                string[] allFuels = _comboBoxFuel.Items.Cast<string>().ToArray();
 
-                string[] valuesComboBoxHybridFuel =
-                    _comboBoxFuel.Items.Cast<string>().ToArray();
+                // Исключаем выбранное топливо из доступных для второго двигателя
+                var availableFuels = allFuels.Where(fuel => fuel != selectedFuel).ToArray();
 
-                int index = Array.IndexOf(valuesComboBoxHybridFuel, valueComboBoxFuel);
-
-                if (index > -1)
-                {
-                    string[] newArray = new string[valuesComboBoxHybridFuel.Length - 1];
-
-                    Array.Copy(valuesComboBoxHybridFuel, 0, newArray, 0, index);
-
-                    Array.Copy(valuesComboBoxHybridFuel, index + 1, newArray, index,
-                        valuesComboBoxHybridFuel.Length - index - 1);
-
-                    FillComboBox(newArray, _comboBoxHybridFuel);
-
-                    return;
-                }
-
-                FillComboBox(valuesComboBoxHybridFuel, _comboBoxHybridFuel);
+                FillComboBox(availableFuels, _comboBoxHybridFuel);
             }
         }
 
@@ -331,8 +371,8 @@ namespace View
         {
             TextBox textBox = (TextBox)sender;
 
-            if (!char.IsControl(e.KeyChar) 
-                && !char.IsDigit(e.KeyChar) 
+            if (!char.IsControl(e.KeyChar)
+                && !char.IsDigit(e.KeyChar)
                 && e.KeyChar != ',')
             {
                 e.Handled = true;
@@ -343,8 +383,7 @@ namespace View
                 e.Handled = true;
             }
 
-            if (e.KeyChar == '0' &&
-                string.IsNullOrEmpty(textBox.Text.Trim('0')))
+            if (e.KeyChar == '0' && textBox.Text == "0")
             {
                 e.Handled = true;
             }
@@ -352,7 +391,7 @@ namespace View
 
 #if DEBUG
         /// <summary>
-        ///  Заполнение данными полей textBox. 
+        /// Заполнение данными полей textBox. 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -360,18 +399,25 @@ namespace View
         {
             Random random = new Random();
 
-            int mass = Convert.ToInt32(_textBoxMass.Text = random.Next(1, 15).ToString());
+            int mass = random.Next(1, 15);
+            _textBoxMass.Text = mass.ToString();
 
-            _textBoxCapacity.Text = Convert.ToString(mass * 100);
+            _textBoxCapacity.Text = (mass * 100).ToString();
 
-            _textBoxHybridCapacity.Text = Convert.ToString(mass * 80);
+            if (_groupBoxDataHybridCar.Visible)
+            {
+                _textBoxHybridCapacity.Text = (mass * 80).ToString();
+            }
 
-            _textBoxBladeLength.Text = random.Next(10, 20).ToString();
+            if (_groupBoxDataHelicopter.Visible)
+            {
+                _textBoxBladeLength.Text = random.Next(10, 20).ToString();
+            }
         }
 
         private void DataForm_Load(object sender, EventArgs e)
         {
-
+            // Метод для обработки загрузки формы
         }
 #endif
     }
