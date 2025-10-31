@@ -53,20 +53,20 @@ namespace View
         /// <summary>
         /// Словарь доступных типов топлива для каждого транспорта.
         /// </summary>
-        private static readonly Dictionary<TypeTransport, string[]> _transportFuelTypes =
-            new Dictionary<TypeTransport, string[]>
+        private static readonly Dictionary<TypeTransport, TypeFuel[]> _transportFuelTypes =
+            new Dictionary<TypeTransport, TypeFuel[]>
         {
             {
                 TypeTransport.Car,
-                new string[] { "Бензин", "Дизель", "Газ", "Электричество" }
+                new TypeFuel[] { TypeFuel.Petrol, TypeFuel.Diesel, TypeFuel.Gas, TypeFuel.Electricity }
             },
             {
                 TypeTransport.HybridCar,
-                new string[] { "Бензин", "Дизель", "Газ", "Электричество" }
+                new TypeFuel[] { TypeFuel.Petrol, TypeFuel.Diesel, TypeFuel.Gas, TypeFuel.Electricity }
             },
             {
                 TypeTransport.Helicopter,
-                new string[] { "Авиационный бензин", "Авиационный керосин" }
+                new TypeFuel[] { TypeFuel.AviationGasoline, TypeFuel.AviationKerosene }
             },
         };
 
@@ -157,7 +157,7 @@ namespace View
         private Car CreateCar()
         {
             Motor motor = new Motor();
-            motor.TypeFuel = _typesFuel[(string)_comboBoxFuel.SelectedItem];
+            motor.TypeFuel = (TypeFuel)_comboBoxFuel.SelectedValue;
             motor.Capacity = Convert.ToDouble(_textBoxCapacity.Text);
             double mass = Convert.ToDouble(_textBoxMass.Text);
 
@@ -175,11 +175,11 @@ namespace View
         private HybridCar CreateHybridCar()
         {
             Motor motor = new Motor();
-            motor.TypeFuel = _typesFuel[(string)_comboBoxFuel.SelectedItem];
+            motor.TypeFuel = (TypeFuel)_comboBoxFuel.SelectedValue;
             motor.Capacity = Convert.ToDouble(_textBoxCapacity.Text);
 
             Motor additionalMotor = new Motor();
-            additionalMotor.TypeFuel = _typesFuel[(string)_comboBoxHybridFuel.SelectedItem];
+            additionalMotor.TypeFuel = (TypeFuel)_comboBoxHybridFuel.SelectedValue;
             additionalMotor.Capacity = Convert.ToDouble(_textBoxHybridCapacity.Text);
 
             double mass = Convert.ToDouble(_textBoxMass.Text);
@@ -199,7 +199,7 @@ namespace View
         private Helicopter CreateHelicopter()
         {
             Motor motor = new Motor();
-            motor.TypeFuel = _typesFuel[(string)_comboBoxFuel.SelectedItem];
+            motor.TypeFuel = (TypeFuel)_comboBoxFuel.SelectedValue;
             motor.Capacity = Convert.ToDouble(_textBoxCapacity.Text);
             double mass = Convert.ToDouble(_textBoxMass.Text);
             double bladeLength = Convert.ToDouble(_textBoxBladeLength.Text);
@@ -305,7 +305,7 @@ namespace View
         }
 
         /// <summary>
-        /// Заполнение comboBox массивом данных comboBox.
+        /// Заполнение comboBox массивом данных.
         /// </summary>
         /// <param name="dataSource">Массив данных.</param>
         /// <param name="comboBox">ComboBox.</param>
@@ -313,6 +313,18 @@ namespace View
         {
             comboBox.DataSource = dataSource;
             comboBox.SelectedItem = dataSource.GetValue(0);
+        }
+
+        /// <summary>
+        /// Заполнение comboBox данными из словаря.
+        /// </summary>
+        /// <param name="dataSource">Словарь данных.</param>
+        /// <param name="comboBox">ComboBox.</param>
+        private void FillComboBoxFromDictionary<TKey, TValue>(Dictionary<TKey, TValue> dataSource, ComboBox comboBox)
+        {
+            comboBox.DataSource = new BindingSource(dataSource, null);
+            comboBox.DisplayMember = "Key";
+            comboBox.ValueMember = "Value";
         }
 
         /// <summary>
@@ -326,7 +338,7 @@ namespace View
             FillComboBoxFuel();
         }
 
-        //TODO: refactor
+        //TODO: refactor +
         /// <summary>
         /// Заполнение ComboBoxFuel массивом данных
         /// в соответствии с выбранным типом транспорта.
@@ -335,9 +347,17 @@ namespace View
         {
             TypeTransport typeTransport = _typesTransports[_comboBoxTransport.Text];
 
-            if (_transportFuelTypes.TryGetValue(typeTransport, out string[] availableFuels))
+            if (_transportFuelTypes.TryGetValue(typeTransport, out TypeFuel[] availableFuels))
             {
-                FillComboBox(availableFuels, _comboBoxFuel);
+                // Создаем словарь для отображения
+                var fuelDictionary = availableFuels.ToDictionary(
+                    fuel => _typesFuel.First(x => x.Value == fuel).Key,
+                    fuel => fuel
+                );
+
+                _comboBoxFuel.DataSource = new BindingSource(fuelDictionary, null);
+                _comboBoxFuel.DisplayMember = "Key";
+                _comboBoxFuel.ValueMember = "Value";
             }
         }
 
@@ -347,18 +367,28 @@ namespace View
         /// </summary>
         /// <param name="sender">Событие.</param>
         /// <param name="e">Данные о событие.</param>
-        /// TOOD: refactor
+        /// TOOD: refactor +
         private void FillComboBoxHybridFuel(object sender, EventArgs e)
         {
-            if (_groupBoxDataHybridCar.Visible)
+            if (_groupBoxDataHybridCar.Visible && _comboBoxFuel.SelectedValue is TypeFuel selectedFuel)
             {
-                string selectedFuel = (string)_comboBoxFuel.SelectedItem;
-                string[] allFuels = _comboBoxFuel.Items.Cast<string>().ToArray();
+                TypeTransport typeTransport = _typesTransports[_comboBoxTransport.Text];
 
-                // Исключаем выбранное топливо из доступных для второго двигателя
-                var availableFuels = allFuels.Where(fuel => fuel != selectedFuel).ToArray();
+                if (_transportFuelTypes.TryGetValue(typeTransport, out TypeFuel[] availableFuels))
+                {
+                    // Исключаем выбранное топливо из доступных для второго двигателя
+                    var hybridFuels = availableFuels.Where(fuel => fuel != selectedFuel).ToArray();
 
-                FillComboBox(availableFuels, _comboBoxHybridFuel);
+                    // Создаем словарь для отображения
+                    var fuelDictionary = hybridFuels.ToDictionary(
+                        fuel => _typesFuel.First(x => x.Value == fuel).Key,
+                        fuel => fuel
+                    );
+
+                    _comboBoxHybridFuel.DataSource = new BindingSource(fuelDictionary, null);
+                    _comboBoxHybridFuel.DisplayMember = "Key";
+                    _comboBoxHybridFuel.ValueMember = "Value";
+                }
             }
         }
 
