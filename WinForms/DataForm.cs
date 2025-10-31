@@ -272,21 +272,25 @@ namespace View
 
             switch (typeTransport)
             {
-                //TODO: RSDN
+                //TODO: RSDN +
                 case TypeTransport.Car:
+                {
                     _groupBoxDataHybridCar.Visible = false;
                     _groupBoxDataHelicopter.Visible = false;
                     break;
-
+                }
                 case TypeTransport.HybridCar:
+                {
                     _groupBoxDataHybridCar.Visible = true;
                     _groupBoxDataHelicopter.Visible = false;
                     break;
-
+                }
                 case TypeTransport.Helicopter:
+                {
                     _groupBoxDataHybridCar.Visible = false;
                     _groupBoxDataHelicopter.Visible = true;
                     break;
+                }
             }
         }
 

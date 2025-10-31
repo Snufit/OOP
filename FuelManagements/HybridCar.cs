@@ -1,5 +1,4 @@
 ﻿using FuelManagement;
-using System.Threading;
 using System;
 
 namespace FuelManagement
@@ -20,7 +19,6 @@ namespace FuelManagement
         /// <param name="motor">Основной Двигатель.</param>
         /// <param name="mass">Масса.</param>
         /// <param name="additionalMotor">Дополнительный двигатель.</param>
-        /// <param name="fielPer100km">Расход на 100 км.</param>
         public HybridCar(Motor motor, double mass, Motor additionalMotor) :
             base(motor, mass)
         {
@@ -58,16 +56,41 @@ namespace FuelManagement
             }
         }
 
+       
+        public override string TypeTransport
+        {
+            get => "Гибридная машина"; 
+        }
+
+
         /// <summary>
-        /// Переопределенный метод Расчета расхода топлива.
+        /// Переопределенный метод расчета расхода топлива.
         /// </summary>
-        /// <param name="distanceBasic">Расстояние, пройденное на основном
-        /// двигателе.</param>
-        /// <param name="distanceAdd">Расстояние, пройденное на дополнительном
-        /// двигателе.</param>
+        /// <param name="distance">Расстояние (км).</param>
         /// <returns>Расход топлива (л).</returns>
-        public (double, double) CalculateFuel(double distanceBasic,
-            double distanceAdd)
+        public override double CalculateFuel(double distance)
+        {
+            // Используем оба двигателя с распределением 70/30
+            double distanceBasic = distance * 0.7;  // 70% на основном
+            double distanceAdd = distance * 0.3;    // 30% на дополнительном
+
+            double coeffСonsumptionBasic = Motor.СalculateConsumption();
+            double coeffСonsumptionAdd = AdditionalMotor.СalculateConsumption();
+            double massFactor = 1 + (Mass / 1000.0) * 0.1;
+
+            double consumptionBasic = distanceBasic * coeffСonsumptionBasic * massFactor;
+            double consumptionAdd = distanceAdd * coeffСonsumptionAdd * massFactor;
+
+            return consumptionBasic + consumptionAdd;
+        }
+
+        /// <summary>
+        /// Перегруженный метод Расчета расхода топлива для раздельного учета.
+        /// </summary>
+        /// <param name="distanceBasic">Расстояние, пройденное на основном двигателе.</param>
+        /// <param name="distanceAdd">Расстояние, пройденное на дополнительном двигателе.</param>
+        /// <returns>Расход топлива (л).</returns>
+        public (double, double) CalculateFuel(double distanceBasic, double distanceAdd)
         {
             double coeffСonsumptionBasic = Motor.СalculateConsumption();
             double coeffСonsumptionAdd = AdditionalMotor.СalculateConsumption();
