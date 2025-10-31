@@ -444,11 +444,6 @@ namespace View
                 _textBoxBladeLength.Text = random.Next(10, 20).ToString();
             }
         }
-
-        private void DataForm_Load(object sender, EventArgs e)
-        {
-            // Метод для обработки загрузки формы
-        }
 #endif
     }
 }
