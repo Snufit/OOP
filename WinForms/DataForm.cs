@@ -349,7 +349,6 @@ namespace View
 
             if (_transportFuelTypes.TryGetValue(typeTransport, out TypeFuel[] availableFuels))
             {
-                // Создаем словарь для отображения
                 var fuelDictionary = availableFuels.ToDictionary(
                     fuel => _typesFuel.First(x => x.Value == fuel).Key,
                     fuel => fuel
@@ -361,13 +360,13 @@ namespace View
             }
         }
 
+        /// TOOD: refactor +
         /// <summary>
         /// Заполнение ComboBoxHybridFuel массивом данных
         /// в соответствии с выбранным ComboBoxFuel.
         /// </summary>
         /// <param name="sender">Событие.</param>
         /// <param name="e">Данные о событие.</param>
-        /// TOOD: refactor +
         private void FillComboBoxHybridFuel(object sender, EventArgs e)
         {
             if (_groupBoxDataHybridCar.Visible && _comboBoxFuel.SelectedValue is TypeFuel selectedFuel)
