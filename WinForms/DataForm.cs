@@ -272,7 +272,6 @@ namespace View
 
             switch (typeTransport)
             {
-                //TODO: RSDN +
                 case TypeTransport.Car:
                 {
                     _groupBoxDataHybridCar.Visible = false;
@@ -318,12 +317,14 @@ namespace View
             comboBox.SelectedItem = dataSource.GetValue(0);
         }
 
+        //TODO: remove
         /// <summary>
         /// Заполнение comboBox данными из словаря.
         /// </summary>
         /// <param name="dataSource">Словарь данных.</param>
         /// <param name="comboBox">ComboBox.</param>
-        private void FillComboBoxFromDictionary<TKey, TValue>(Dictionary<TKey, TValue> dataSource, ComboBox comboBox)
+        private void FillComboBoxFromDictionary<TKey, TValue>(
+            Dictionary<TKey, TValue> dataSource, ComboBox comboBox)
         {
             comboBox.DataSource = new BindingSource(dataSource, null);
             comboBox.DisplayMember = "Key";
@@ -362,7 +363,6 @@ namespace View
             }
         }
 
-        /// TOOD: refactor +
         /// <summary>
         /// Заполнение ComboBoxHybridFuel массивом данных
         /// в соответствии с выбранным ComboBoxFuel.
@@ -371,7 +371,8 @@ namespace View
         /// <param name="e">Данные о событие.</param>
         private void FillComboBoxHybridFuel(object sender, EventArgs e)
         {
-            if (_groupBoxDataHybridCar.Visible && _comboBoxFuel.SelectedValue is TypeFuel selectedFuel)
+            if (_groupBoxDataHybridCar.Visible 
+                && _comboBoxFuel.SelectedValue is TypeFuel selectedFuel)
             {
                 TypeTransport typeTransport = _typesTransports[_comboBoxTransport.Text];
 

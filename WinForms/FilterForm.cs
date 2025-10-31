@@ -204,7 +204,6 @@ namespace View
                     {
                         transportList.RemoveAt(i);
                     }
-                    ;
                 }
             }
         }

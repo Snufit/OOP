@@ -98,7 +98,6 @@ namespace View
             if (!_isDataFormOpen)
             {
                 _isDataFormOpen = true;
-                //TODO: rsdn +
                 DataForm dataForm = new DataForm();
                 dataForm.FormClosed += (s, args) 
                     => { _isDataFormOpen = false; };
