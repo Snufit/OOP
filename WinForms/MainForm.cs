@@ -137,28 +137,42 @@ namespace View
 
             if (result == DialogResult.Yes)
             {
-                // Удаляем из основного списка
                 foreach (var transport in selectedTransports)
                 {
                     _transportList.Remove(transport);
                 }
 
-                // АВТОМАТИЧЕСКИ обновляем отфильтрованный список
                 if (_filteredTransportList != null)
                 {
-                    // Создаем новый отфильтрованный список без удаленных элементов
                     var updatedFilteredList = _filteredTransportList
                         .Where(item => _transportList.Contains(item))
                         .ToList();
 
-                    _filteredTransportList = new BindingList<TransportBase>(updatedFilteredList);
+                    _filteredTransportList = new 
+                        BindingList<TransportBase>(updatedFilteredList);
+
+                    if (_filteredTransportList.Count == 0)
+                    {
+                        _filteredTransportList = null;
+                        FillingDataGridView(_transportList);
+                        MessageBox.Show(
+                            "Все элементы в отфильтрованном списке удалены. " +
+                            "Фильтр сброшен.", "Информация",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        FillingDataGridView(_filteredTransportList);
+                        MessageBox.Show("Элементы успешно удалены.", "Успех",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
-
-                // Обновляем отображение
-                RefreshDataGridView();
-
-                MessageBox.Show("Элементы успешно удалены.", "Успех",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else
+                {
+                    FillingDataGridView(_transportList);
+                    MessageBox.Show("Элементы успешно удалены.", "Успех",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
 

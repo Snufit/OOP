@@ -145,7 +145,7 @@ namespace View
             _buttonAgree.Name = "_buttonAgree";
             _buttonAgree.Size = new Size(100, 30);
             _buttonAgree.TabIndex = 0;
-            _buttonAgree.Text = "ОК";
+            _buttonAgree.Text = "Добавить";
             _buttonAgree.UseVisualStyleBackColor = false;
             // 
             // _buttonCancel
@@ -154,7 +154,7 @@ namespace View
             _buttonCancel.Name = "_buttonCancel";
             _buttonCancel.Size = new Size(100, 30);
             _buttonCancel.TabIndex = 1;
-            _buttonCancel.Text = "Отмена";
+            _buttonCancel.Text = "Отменить";
             _buttonCancel.UseVisualStyleBackColor = false;
             // 
             // _buttonRandom

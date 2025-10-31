@@ -98,50 +98,6 @@ namespace View
         }
 
         /// <summary>
-        /// Метод фильтрации по данным транспорта.
-        /// </summary>
-        //private void CheckedData()
-        //{
-        //    BindingList<TransportBase> transportList;
-
-        //    bool statusCheckBox = _checkBoxFindCar.Checked
-        //        || _checkBoxFindHybridCar.Checked
-        //        || _checkBoxFindHelicopter.Checked;
-
-        //    transportList = statusCheckBox
-        //        ? new BindingList<TransportBase>(_filteredTransportList.ToList())
-        //        : new BindingList<TransportBase>(_transportList.ToList());
-
-        //    if (_checkBoxMass.Checked)
-        //    {
-        //        if (!string.IsNullOrEmpty(_textBoxMass.Text))
-        //        {
-        //            FilteredMass(transportList, Convert.ToDouble(_textBoxMass.Text));
-        //            _filteredTransportList = transportList;
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Введите массу.", "Предупреждение",
-        //                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //        }
-        //    }
-
-        //    if (_checkBoxCapacity.Checked)
-        //    {
-        //        if (!string.IsNullOrEmpty(_textBoxCapacity.Text))
-        //        {
-        //            FilteredCapacity(transportList, Convert.ToDouble(_textBoxCapacity.Text));
-        //            _filteredTransportList = transportList;
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Введите мощность.", "Предупреждение",
-        //                MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //        }
-        //    }
-        //}
-
-        /// <summary>
         /// Метод фильтрации данных по типу транспорта.
         /// </summary>
         /// <param name="transportList">Исходный список.</param>
