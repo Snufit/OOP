@@ -98,13 +98,13 @@ namespace View
             if (!_isDataFormOpen)
             {
                 _isDataFormOpen = true;
-                //TODO: rsdn 
-                DataForm DataForm = new DataForm();
-                DataForm.FormClosed += (s, args) 
+                //TODO: rsdn +
+                DataForm dataForm = new DataForm();
+                dataForm.FormClosed += (s, args) 
                     => { _isDataFormOpen = false; };
-                DataForm.TransportAdded += AddedTransport;
-                DataForm.TransportCancel += CancelTransport;
-                DataForm.Show();
+                dataForm.TransportAdded += AddedTransport;
+                dataForm.TransportCancel += CancelTransport;
+                dataForm.Show();
             }
         }
 
