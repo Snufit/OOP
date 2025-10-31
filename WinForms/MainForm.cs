@@ -114,6 +114,7 @@ namespace View
         /// <param name="e">Данные о событие.</param>
         private void RemoveTransportButtonClick(object sender, EventArgs e)
         {
+            UpdateFilteredList();
             if (_gridControlTransport.SelectedRows.Count > 0)
             {
                 var selectedTransports = _gridControlTransport.SelectedRows
@@ -123,14 +124,48 @@ namespace View
                     .Where(transport => transport != null)
                     .ToList();
 
+                if (!selectedTransports.Any())
+                {
+                    MessageBox.Show("Выберите строки для удаления.", "Информация",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // Удаляем из ОСНОВНОГО списка, а не из отфильтрованного
                 foreach (var transport in selectedTransports)
                 {
                     _transportList.Remove(transport);
                 }
+
+                // Обновляем отображение
+                if (_filteredTransportList != null && _filteredTransportList.Any())
+                {
+                    // Если активен фильтр, обновляем отфильтрованный список
+                    FillingDataGridView(_filteredTransportList);
+                }
             }
             else
             {
-                MessageBox.Show("Выберите строку для удаления.");
+                MessageBox.Show("Выберите строки для удаления.", "Информация",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        /// <summary>
+        /// Обновляет отфильтрованный список после изменений в основном списке.
+        /// </summary>
+        private void UpdateFilteredList()
+        {
+            if (_filteredTransportList != null)
+            {
+                // Оставляем в отфильтрованном списке только те элементы, 
+                // которые остались в основном списке
+                var itemsToKeep = _filteredTransportList
+                    .Where(item => _transportList.Contains(item))
+                    .ToList();
+
+                _filteredTransportList = new BindingList<TransportBase>(itemsToKeep);
+                FillingDataGridView(_filteredTransportList);
             }
         }
 
