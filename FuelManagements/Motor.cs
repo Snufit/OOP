@@ -82,7 +82,7 @@ namespace FuelManagement
         /// </summary>
         public string Info
         {
-            get => $"Тип топлива: {_typesFuel[TypeFuel]}\nМощность: {Capacity} л.с.";
+            get => $"Тип топлива: {_typesFuel[TypeFuel]} \nМощность: {Capacity} л.с.";
         }
 
         /// <summary>

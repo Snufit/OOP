@@ -334,7 +334,6 @@ namespace View
             MinimizeBox = false;
             Name = "DataForm";
             Text = "Добавить транспорт";
-            Load += DataForm_Load;
             _groupBoxData.ResumeLayout(false);
             _groupBoxData.PerformLayout();
             _groupBoxDataHybridCar.ResumeLayout(false);
