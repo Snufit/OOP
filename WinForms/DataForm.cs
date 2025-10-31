@@ -317,20 +317,7 @@ namespace View
             comboBox.SelectedItem = dataSource.GetValue(0);
         }
 
-        //TODO: remove
-        /// <summary>
-        /// Заполнение comboBox данными из словаря.
-        /// </summary>
-        /// <param name="dataSource">Словарь данных.</param>
-        /// <param name="comboBox">ComboBox.</param>
-        private void FillComboBoxFromDictionary<TKey, TValue>(
-            Dictionary<TKey, TValue> dataSource, ComboBox comboBox)
-        {
-            comboBox.DataSource = new BindingSource(dataSource, null);
-            comboBox.DisplayMember = "Key";
-            comboBox.ValueMember = "Value";
-        }
-
+        //TODO: remove +
         /// <summary>
         /// Заполнение ComboBoxFuel массивом данных
         /// в соответствии с выбранным типом транспорта.
