@@ -64,22 +64,29 @@ namespace View
             {
                 var filteredList = new List<TransportBase>(_transportList);
 
-                if (_checkBoxFindCar.Checked || _checkBoxFindHybridCar.Checked || _checkBoxFindHelicopter.Checked)
+                if (_checkBoxFindCar.Checked 
+                    || _checkBoxFindHybridCar.Checked 
+                    || _checkBoxFindHelicopter.Checked)
                 {
                     filteredList = FilterByType(filteredList);
                 }
 
-                if (_checkBoxMass.Checked && !string.IsNullOrEmpty(_textBoxMass.Text))
+                if (_checkBoxMass.Checked && 
+                    !string.IsNullOrEmpty(_textBoxMass.Text))
                 {
-                    filteredList = FilterByMass(filteredList, Convert.ToDouble(_textBoxMass.Text));
+                    filteredList = FilterByMass
+                        (filteredList, Convert.ToDouble(_textBoxMass.Text));
                 }
 
-                if (_checkBoxCapacity.Checked && !string.IsNullOrEmpty(_textBoxCapacity.Text))
+                if (_checkBoxCapacity.Checked && 
+                    !string.IsNullOrEmpty(_textBoxCapacity.Text))
                 {
-                    filteredList = FilterByCapacity(filteredList, Convert.ToDouble(_textBoxCapacity.Text));
+                    filteredList = FilterByCapacity
+                        (filteredList, Convert.ToDouble(_textBoxCapacity.Text));
                 }
 
-                _filteredTransportList = new BindingList<TransportBase>(filteredList);
+                _filteredTransportList = 
+                    new BindingList<TransportBase>(filteredList);
 
                 if (_filteredTransportList.Count == 0)
                 {
@@ -88,7 +95,8 @@ namespace View
                     return;
                 }
 
-                TransportFiltered?.Invoke(this, new TransportFilterEventArgs(_filteredTransportList));
+                TransportFiltered?.Invoke
+                    (this, new TransportFilterEventArgs(_filteredTransportList));
             }
             catch (Exception ex)
             {
@@ -108,7 +116,6 @@ namespace View
 
             if (_checkBoxFindCar.Checked)
             {
-                // Заменяем "c is not HybridCar" на совместимый с C# 7.3 синтаксис
                 filtered.AddRange(transportList.OfType<Car>().Where(c => !(c is HybridCar)));
             }
 

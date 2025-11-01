@@ -1,5 +1,6 @@
 ﻿using FuelManagement;
 using System;
+using System.Collections.Generic;
 
 namespace FuelManagement
 {
@@ -62,6 +63,27 @@ namespace FuelManagement
             get => "Гибридная машина"; 
         }
 
+        public override string DisplayInfo
+        {
+            get
+            {
+                var fuelNames = new Dictionary<TypeFuel, string>
+            {
+                {TypeFuel.Petrol, "Бензин"},
+                {TypeFuel.Diesel, "Дизель"},
+                {TypeFuel.Electricity, "Электричество"},
+                {TypeFuel.Gas, "Газ"},
+                {TypeFuel.AviationKerosene, "Авиационный керосин"},
+                {TypeFuel.AviationGasoline, "Авиационный бензин"}
+            };
+
+                return $"Основное топливо: {fuelNames[Motor.TypeFuel]}\n" +
+                       $"Доп. топливо: {fuelNames[AdditionalMotor.TypeFuel]}\n" +
+                       $"Мощность основного: {Motor.Capacity} л.с.\n" +
+                       $"Мощность доп.: {AdditionalMotor.Capacity} л.с.\n" +
+                       $"Масса: {Mass} т.";
+            }
+        }
 
         /// <summary>
         /// Переопределенный метод расчета расхода топлива.

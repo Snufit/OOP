@@ -58,17 +58,34 @@ namespace View
         {
             {
                 TypeTransport.Car,
-                //TODO: RSDN
-                new TypeFuel[] { TypeFuel.Petrol, TypeFuel.Diesel, TypeFuel.Gas, TypeFuel.Electricity }
+                //TODO: RSDN +
+                new TypeFuel[]
+                {
+                    TypeFuel.Petrol,
+                    TypeFuel.Diesel,
+                    TypeFuel.Gas,
+                    TypeFuel.Electricity
+                }
             },
             {
                 TypeTransport.HybridCar,
-                //TODO: RSDN
-                new TypeFuel[] { TypeFuel.Petrol, TypeFuel.Diesel, TypeFuel.Gas, TypeFuel.Electricity }
+                //TODO: RSDN +
+                new TypeFuel[]
+                {
+                    TypeFuel.Petrol,
+                    TypeFuel.Diesel,
+                    TypeFuel.Gas,
+                    TypeFuel.Electricity
+                }
             },
             {
                 TypeTransport.Helicopter,
-                new TypeFuel[] { TypeFuel.AviationGasoline, TypeFuel.AviationKerosene }
+                //TODO: RSDN +
+                new TypeFuel[]
+                {
+                    TypeFuel.AviationGasoline,
+                    TypeFuel.AviationKerosene
+                }
             },
         };
 
@@ -83,7 +100,7 @@ namespace View
             FillComboBoxFuel();
 
             _comboBoxTransport.SelectedIndexChanged += AddGroupBoxData;
-            _comboBoxTransport.SelectedIndexChanged += comboBoxTransportFillComboBoxFuel;
+            _comboBoxTransport.SelectedIndexChanged += ComboBoxTransportFillComboBoxFuel;
             _comboBoxFuel.SelectedIndexChanged += FillComboBoxHybridFuel;
             _buttonAgree.Click += AgreeButtonClick;
             _buttonCancel.Click += CancelButtonClick;
@@ -227,7 +244,6 @@ namespace View
                 return false;
             }
 
-            // Проверка гибридной машины
             if (_groupBoxDataHybridCar.Visible &&
                 string.IsNullOrWhiteSpace(_textBoxHybridCapacity.Text))
             {
@@ -236,7 +252,6 @@ namespace View
                 return false;
             }
 
-            // Проверка вертолета
             if (_groupBoxDataHelicopter.Visible &&
                 string.IsNullOrWhiteSpace(_textBoxBladeLength.Text))
             {
@@ -245,7 +260,6 @@ namespace View
                 return false;
             }
 
-            // Проверка числовых значений
             if (!double.TryParse(_textBoxMass.Text, out double mass) || mass <= 0)
             {
                 MessageBox.Show("Введите корректную массу.", "Ошибка",
@@ -319,14 +333,14 @@ namespace View
             comboBox.SelectedItem = dataSource.GetValue(0);
         }
 
-        //TODO: RSDN
+        //TODO: RSDN +
         /// <summary>
         /// Заполнение ComboBoxFuel массивом данных
         /// в соответствии с выбранным типом транспорта.
         /// </summary>
         /// <param name="sender">Событие.</param>
         /// <param name="e">Данные о событие.</param>
-        private void comboBoxTransportFillComboBoxFuel(object sender, EventArgs e)
+        private void ComboBoxTransportFillComboBoxFuel(object sender, EventArgs e)
         {
             FillComboBoxFuel();
         }
@@ -367,10 +381,7 @@ namespace View
 
                 if (_transportFuelTypes.TryGetValue(typeTransport, out TypeFuel[] availableFuels))
                 {
-                    // Исключаем выбранное топливо из доступных для второго двигателя
                     var hybridFuels = availableFuels.Where(fuel => fuel != selectedFuel).ToArray();
-
-                    // Создаем словарь для отображения
                     var fuelDictionary = hybridFuels.ToDictionary(
                         fuel => _typesFuel.First(x => x.Value == fuel).Key,
                         fuel => fuel

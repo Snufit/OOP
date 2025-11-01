@@ -46,7 +46,7 @@ namespace FuelManagement
         /// <summary>
         /// Информация о транспорте.
         /// </summary>
-        [DisplayName("Основная информация")]
+        [Browsable(false)]
         public abstract string Info { get; }
 
         /// <summary>
@@ -61,5 +61,11 @@ namespace FuelManagement
         /// <param name="distance">Расстояние.</param>
         /// <returns>Расход топлива (л).</returns>
         public abstract double CalculateFuel(double distance);
+
+        /// <summary>
+        /// Отформатированная информация для отображения.
+        /// </summary>
+        [DisplayName("Основная информация")]
+        public abstract string DisplayInfo { get; }
     }
 }

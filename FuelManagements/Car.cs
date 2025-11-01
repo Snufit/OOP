@@ -1,5 +1,6 @@
 ﻿using FuelManagement;
 using System;
+using System.Collections.Generic;
 
 namespace FuelManagement
 {
@@ -48,13 +49,31 @@ namespace FuelManagement
             }
         }
 
-        /// <inheritdoc/>
+        public override string DisplayInfo
+        {
+            get
+            {
+                var fuelNames = new Dictionary<TypeFuel, string>
+            {
+                {TypeFuel.Petrol, "Бензин"},
+                {TypeFuel.Diesel, "Дизель"},
+                {TypeFuel.Electricity, "Электричество"},
+                {TypeFuel.Gas, "Газ"},
+                {TypeFuel.AviationKerosene, "Авиационный керосин"},
+                {TypeFuel.AviationGasoline, "Авиационный бензин"}
+            };
+
+                return $"Тип топлива: {fuelNames[Motor.TypeFuel]}\n" +
+                       $"Мощность: {Motor.Capacity} л.с.\n" +
+                       $"Масса: {Mass} т.";
+            }
+        }
+
         public override string Info
         {
             get => $"{Motor.Info} \nМасса: {Mass} т.";
         }
 
-        /// <inheritdoc/>
         public override string TypeTransport
         {
             get => "Машина";

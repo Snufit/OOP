@@ -177,27 +177,42 @@ namespace View
         }
 
         /// <summary>
-        /// Обновляет отображение DataGridView в зависимости от текущего состояния.
-        /// </summary>
-        private void RefreshDataGridView()
-        {
-            if (_filteredTransportList != null && _filteredTransportList.Count > 0)
-            {
-                FillingDataGridView(_filteredTransportList);
-            }
-            else
-            {
-                FillingDataGridView(_transportList);
-                _filteredTransportList = null; // Сбрасываем фильтр
-            }
-        }
-
-        /// <summary>
         /// Метод заполнения таблицы "Список транспорта".
         /// </summary>
         private void FillingDataGridView(BindingList<TransportBase> transportList)
         {
+            _gridControlTransport.AutoGenerateColumns = false;
+            _gridControlTransport.Columns.Clear();
+
+            var typeColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Вид транспорта",
+                DataPropertyName = "TypeTransport",
+                Width = 120,
+                ReadOnly = true
+            };
+            _gridControlTransport.Columns.Add(typeColumn);
+
+            var infoColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Основная информация",
+                DataPropertyName = "DisplayInfo",
+                Width = 250,
+                ReadOnly = true
+            };
+            _gridControlTransport.Columns.Add(infoColumn);
+
+            var consumptionColumn = new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Расход топлива",
+                DataPropertyName = "FuelConsumption",
+                Width = 120,
+                ReadOnly = true
+            };
+            _gridControlTransport.Columns.Add(consumptionColumn);
             _gridControlTransport.DataSource = transportList;
+            _gridControlTransport.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            _gridControlTransport.DefaultCellStyle.WrapMode = DataGridViewTriState.True;
         }
 
         /// <summary>
