@@ -111,7 +111,7 @@ namespace View
         /// Метод нажатия на кнопку "Удалить"
         /// </summary>
         /// <param name="sender">Событие.</param>
-        /// <param name="e">Данные о событие.</param>
+        /// <param name="e">Данные о событии.</param>
         private void RemoveTransportButtonClick(object sender, EventArgs e)
         {
             if (_gridControlTransport.SelectedRows.Count == 0)
@@ -148,13 +148,11 @@ namespace View
                         .Where(item => _transportList.Contains(item))
                         .ToList();
 
-                    _filteredTransportList = new 
-                        BindingList<TransportBase>(updatedFilteredList);
+                    _filteredTransportList = new BindingList<TransportBase>(updatedFilteredList);
 
                     if (_filteredTransportList.Count == 0)
                     {
-                        _filteredTransportList = null;
-                        FillingDataGridView(_transportList);
+                        ResetFilters();
                         MessageBox.Show(
                             "Все элементы в отфильтрованном списке удалены. " +
                             "Фильтр сброшен.", "Информация",
@@ -313,13 +311,27 @@ namespace View
                         _serializerXml.Deserialize(file);
                 }
 
+                ResetFilters();
+
                 _gridControlTransport.DataSource = _transportList;
+
+                MessageBox.Show("Файл успешно загружен", "Успех",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Не удалось загрузить файл!", "Предупреждение",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show($"Не удалось загрузить файл: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        /// <summary>
+        /// Метод сброса фильтров.
+        /// </summary>
+        private void ResetFilters()
+        {
+            _filteredTransportList = null;
+            FillingDataGridView(_transportList);
         }
     }
 }
