@@ -44,7 +44,10 @@ namespace View
         /// <summary>
         /// Свойство для отслеживания активности фильтров.
         /// </summary>
-        private bool _isFilterActive => _filteredTransportList != null && _filteredTransportList.Count > 0;
+        private bool _isFilterActive
+        {
+            get { return _filteredTransportList != null && _filteredTransportList != _transportList; }
+        }
 
         /// <summary>
         /// Конструктор MainForm.
@@ -52,7 +55,7 @@ namespace View
         public MainForm()
         {
             InitializeComponent();
-
+            _filteredTransportList = null;
             FillingDataGridView(_transportList);
             UpdateButtonStates();
 
@@ -100,17 +103,22 @@ namespace View
         /// </summary>
         private void UpdateButtonStates()
         {
-            _buttonAddTransport.Enabled = !_isFilterActive;
+            bool isFilterActive = _isFilterActive;
 
-            if (_isFilterActive)
+            _buttonAddTransport.Enabled = !isFilterActive;
+
+            // Визуальное отображение состояния кнопки
+            if (isFilterActive)
             {
                 _buttonAddTransport.BackColor = SystemColors.Control;
                 _buttonAddTransport.ForeColor = SystemColors.GrayText;
+                _buttonAddTransport.FlatStyle = FlatStyle.Flat;
             }
             else
             {
                 _buttonAddTransport.BackColor = SystemColors.ButtonHighlight;
                 _buttonAddTransport.ForeColor = SystemColors.ControlText;
+                _buttonAddTransport.FlatStyle = FlatStyle.Standard;
             }
         }
 
@@ -366,7 +374,7 @@ namespace View
 
                 _gridControlTransport.DataSource = _transportList;
 
-                MessageBox.Show("Файл успешно загружен!", "Успех",
+                MessageBox.Show("Файл успешно загружен", "Успех",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
