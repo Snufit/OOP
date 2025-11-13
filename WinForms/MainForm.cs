@@ -1,10 +1,11 @@
-﻿using System;
+﻿using FuelManagement;
+using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using FuelManagement;
 
 namespace View
 {
@@ -41,6 +42,11 @@ namespace View
             new XmlSerializer(typeof(BindingList<TransportBase>));
 
         /// <summary>
+        /// Свойство для отслеживания активности фильтров.
+        /// </summary>
+        private bool _isFilterActive => _filteredTransportList != null && _filteredTransportList.Count > 0;
+
+        /// <summary>
         /// Конструктор MainForm.
         /// </summary>
         public MainForm()
@@ -48,6 +54,7 @@ namespace View
             InitializeComponent();
 
             FillingDataGridView(_transportList);
+            UpdateButtonStates();
 
             _buttonAddTransport.Click += AddTransportButtonClick;
 
@@ -89,18 +96,48 @@ namespace View
         }
 
         /// <summary>
+        /// Метод обновления состояния кнопок в зависимости от активности фильтров.
+        /// </summary>
+        private void UpdateButtonStates()
+        {
+            _buttonAddTransport.Enabled = !_isFilterActive;
+
+            if (_isFilterActive)
+            {
+                _buttonAddTransport.BackColor = SystemColors.Control;
+                _buttonAddTransport.ForeColor = SystemColors.GrayText;
+            }
+            else
+            {
+                _buttonAddTransport.BackColor = SystemColors.ButtonHighlight;
+                _buttonAddTransport.ForeColor = SystemColors.ControlText;
+            }
+        }
+
+        /// <summary>
         /// Метод нажатия на кнопку "Добавить".
         /// </summary>
         /// <param name="sender">Событие.</param>
-        /// <param name="e">Данные о событие.</param>
+        /// <param name="e">Данные о событии.</param>
         private void AddTransportButtonClick(object sender, EventArgs e)
         {
+            if (_isFilterActive)
+            {
+                MessageBox.Show("Невозможно добавить транспорт при активных фильтрах. " +
+                               "Сбросьте фильтры для добавления новых элементов.", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (!_isDataFormOpen)
             {
                 _isDataFormOpen = true;
                 DataForm dataForm = new DataForm();
-                dataForm.FormClosed += (s, args) 
-                    => { _isDataFormOpen = false; };
+                dataForm.FormClosed += (s, args) =>
+                {
+                    _isDataFormOpen = false;
+                    UpdateButtonStates();
+                };
                 dataForm.TransportAdded += AddedTransport;
                 dataForm.TransportCancel += CancelTransport;
                 dataForm.Show();
@@ -114,6 +151,14 @@ namespace View
         /// <param name="e">Данные о событии.</param>
         private void RemoveTransportButtonClick(object sender, EventArgs e)
         {
+            if (_filteredTransportList.Count == 0)
+            {
+                ResetFilters();
+                MessageBox.Show(
+                    "Все элементы в отфильтрованном списке удалены. " +
+                    "Фильтр сброшен.", "Информация",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
             if (_gridControlTransport.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Выберите строки для удаления.", "Информация",
@@ -225,8 +270,11 @@ namespace View
                 _isFindFormOpen = true;
 
                 FilterForm findForm = new FilterForm(_transportList);
-                findForm.FormClosed += (s, args) 
-                    => { _isFindFormOpen = false; };
+                findForm.FormClosed += (s, args) =>
+                {
+                    _isFindFormOpen = false;
+                    UpdateButtonStates(); // Обновляем при закрытии формы фильтрации
+                };
                 findForm.TransportFiltered += FilteredTransport;
                 findForm.Show();
             }
@@ -245,16 +293,19 @@ namespace View
             _filteredTransportList = filterEventArgs?.FilteredTransportList;
 
             FillingDataGridView(_filteredTransportList);
+            UpdateButtonStates();
         }
 
         /// <summary>
         /// Метод нажатия на кнопку "Сбросить".
         /// </summary>
         /// <param name="sender">Событие.</param>
-        /// <param name="e">Данные о событие.</param>
+        /// <param name="e">Данные о событии.</param>
         private void ResetedFilter(object sender, EventArgs e)
         {
-            FillingDataGridView(_transportList);
+            ResetFilters();
+            MessageBox.Show("Фильтры сброшены.", "Информация",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>
@@ -315,7 +366,7 @@ namespace View
 
                 _gridControlTransport.DataSource = _transportList;
 
-                MessageBox.Show("Файл успешно загружен", "Успех",
+                MessageBox.Show("Файл успешно загружен!", "Успех",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -332,6 +383,7 @@ namespace View
         {
             _filteredTransportList = null;
             FillingDataGridView(_transportList);
+            UpdateButtonStates();
         }
     }
 }
