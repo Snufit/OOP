@@ -21,6 +21,11 @@ namespace View
             new BindingList<TransportBase>();
 
         /// <summary>
+        /// Поле для хранения ссылки на форму фильтрации.
+        /// </summary>
+        private FilterForm _currentFilterForm;
+
+        /// <summary>
         /// Отфильтрованный лист для заполнения таблицы.
         /// </summary>
         private BindingList<TransportBase> _filteredTransportList;
@@ -277,15 +282,30 @@ namespace View
             {
                 _isFindFormOpen = true;
 
-                FilterForm findForm = new FilterForm(_transportList);
-                findForm.FormClosed += (s, args) =>
+                _currentFilterForm = new FilterForm(_transportList);
+                _currentFilterForm.FormClosed += (s, args) =>
                 {
                     _isFindFormOpen = false;
-                    UpdateButtonStates(); // Обновляем при закрытии формы фильтрации
+                    _currentFilterForm = null; 
+                    UpdateButtonStates();
                 };
-                findForm.TransportFiltered += FilteredTransport;
-                findForm.Show();
+                _currentFilterForm.TransportFiltered += FilteredTransport;
+                _currentFilterForm.Show();
             }
+            else
+            {
+                _currentFilterForm?.BringToFront();
+            }
+        }
+
+        /// <summary>
+        /// Обработчик закрытия главной формы.
+        /// </summary>
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            // Закрываем форму фильтрации при закрытии главной формы
+            _currentFilterForm?.Close();
+            base.OnFormClosed(e);
         }
 
         /// <summary>
@@ -364,6 +384,12 @@ namespace View
 
             try
             {
+                if (_currentFilterForm != null && !_currentFilterForm.IsDisposed)
+                {
+                    _currentFilterForm.Close();
+                    _currentFilterForm = null;
+                }
+
                 using (var file = new StreamReader(filePath))
                 {
                     _transportList = (BindingList<TransportBase>)
@@ -374,7 +400,7 @@ namespace View
 
                 _gridControlTransport.DataSource = _transportList;
 
-                MessageBox.Show("Файл успешно загружен", "Успех",
+                MessageBox.Show("Файл успешно загружен!", "Успех",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
@@ -392,6 +418,12 @@ namespace View
             _filteredTransportList = null;
             FillingDataGridView(_transportList);
             UpdateButtonStates();
+
+            if (_currentFilterForm != null && !_currentFilterForm.IsDisposed)
+            {
+                _currentFilterForm.Close();
+                _currentFilterForm = null;
+            }
         }
     }
 }
